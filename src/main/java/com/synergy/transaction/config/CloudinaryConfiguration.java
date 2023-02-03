@@ -1,4 +1,4 @@
-package com.synergy.transaction.util;
+package com.synergy.transaction.config;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
