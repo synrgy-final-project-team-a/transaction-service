@@ -26,7 +26,9 @@ public class TransactionHistory {
 
     @DeleteMapping(value = "/user/{profileId}/transaction/{transactionId}")
     public ResponseEntity<Map<String, Object>> deleteTransactionById(@PathVariable("profileId") Long profileId, @PathVariable("transactionId") Long transactionId) {
-        if (!transactionServiceImpl.deleteTransaction(profileId, transactionId)) {
+        boolean deletedTransaction = transactionServiceImpl.deleteTransaction(profileId, transactionId);
+
+        if (!deletedTransaction) {
             return res.clientError("transaction doesn't exist");
         }
         return res.resSuccess(1, "success", 200);
