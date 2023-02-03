@@ -33,5 +33,5 @@ build/
 .vscode/
 
 ### Project Configutaion ###
-src/main/resources/application.properties
+#src/main/resources/application.properties
 
