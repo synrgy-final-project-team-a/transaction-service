@@ -26,6 +26,6 @@ public class RandomGenerator {
 
     public static String getTransactionCode(Long objectId) {
         String code = getCode(8);
-        return datetime.getMinute() + "-" + code;
+        return datetime.getMinute() + "-" + objectId + "-" + code;
     }
 }
