@@ -4,6 +4,8 @@ import com.synergy.transaction.entity.Transaction;
 import com.synergy.transaction.repository.TransactionRepository;
 import com.synergy.transaction.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -48,6 +50,12 @@ public class TransactionServiceImpl implements TransactionService {
         }
         return false;
     }
+
+     @Override
+    public Page<Transaction> getAllTransactionHistoryByIdSeekerWithPagination(Long seekerId, Pageable pageable) {
+        return transactionRepository.findAllBySeekerId(seekerId, pageable);
+    }
+
 
 
 }

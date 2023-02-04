@@ -3,6 +3,7 @@ package com.synergy.transaction.controller;
 import com.synergy.transaction.service.impl.TransactionServiceImpl;
 import com.synergy.transaction.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,5 +34,19 @@ public class TransactionHistory {
         }
         return res.resSuccess(1, "success", 200);
     }
+
+
+    @GetMapping(value = "/seeker/{seekerId}")
+    public ResponseEntity<Map<String, Object>> getAllTransactionHistoryByIdSeekerWithPagination(
+            @PathVariable("seekerId") Long seekerId,
+            Pageable pageable
+    ) {
+        return res.resSuccess(
+                transactionServiceImpl.getAllTransactionHistoryByIdSeekerWithPagination(seekerId, pageable),
+                "success",
+                200
+        );
+    }
+
 
 }
