@@ -3,10 +3,12 @@ package com.synergy.transaction.service.impl;
 import com.synergy.transaction.entity.Transaction;
 import com.synergy.transaction.repository.TransactionRepository;
 import com.synergy.transaction.service.TransactionService;
+import com.synergy.transaction.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -14,6 +16,8 @@ public class TransactionServiceImpl implements TransactionService {
     @Autowired
     TransactionRepository transactionRepository;
 
+    @Autowired
+    public Response res;
 
     @Override
     public List<Map<String, Object>> getAllTransactionByProfileId(Long profileId) {
@@ -49,5 +53,16 @@ public class TransactionServiceImpl implements TransactionService {
         return false;
     }
 
-
+    @Override
+    public Map getByIdTennant(Long transactionId) {
+        try {
+            Transaction checkingData = transactionRepository.getTransactionByIdTennant(transactionId);
+            if (checkingData == null) {
+                return (Map) res.notFoundError("Transaction cannot be found!");
+            }
+            return (Map) res.resSuccess(checkingData,"success",200);
+        } catch (Exception e) {
+            return (Map) res.clientError("Error get by id: " + e.getMessage());
+        }
+    }
 }
