@@ -3,6 +3,9 @@ package com.synergy.transaction.service.impl;
 import com.synergy.transaction.entity.Transaction;
 import com.synergy.transaction.repository.TransactionRepository;
 import com.synergy.transaction.service.TransactionService;
+import com.synergy.transaction.util.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +13,11 @@ import java.util.*;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
+
+    private static Logger logger = LoggerFactory.getLogger(TransactionServiceImpl.class);
+    @Autowired
+    public Response res;
+
 
     @Autowired
     TransactionRepository transactionRepository;
@@ -48,6 +56,25 @@ public class TransactionServiceImpl implements TransactionService {
         }
         return false;
     }
+
+    @Override
+    public Map getTransactionByIdSeeker(Long transaction_id) {
+        try {
+            Transaction checkingData = transactionRepository.getTransactionDataSeeker(transaction_id);
+            if (checkingData == null) {
+                return (Map) res.notFoundError("Data cannot be found!");
+            }
+            return (Map) res.resSuccess(checkingData, "success", 200);
+
+        } catch (Exception e) {
+            logger.error("Error get by id, {} " + e);
+            return (Map) res.clientError("Error get by id: " + e);
+
+        }
+
+    }
+
+
 
 
 }

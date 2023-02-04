@@ -7,4 +7,6 @@ public interface TransactionService {
     List<Map<String, Object>> getAllTransactionByProfileId(Long profileId);
 
     boolean deleteTransaction(Long profileId, Long transactionId);
+
+    public Map getTransactionByIdSeeker(Long transaction_id);
 }
