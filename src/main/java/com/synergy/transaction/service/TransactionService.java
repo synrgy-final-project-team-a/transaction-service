@@ -22,11 +22,6 @@ public interface TransactionService {
     Boolean rejectTransaction(Long transactionId);
 
     Boolean softDeleteTransaction(Long transactionId);
-    Map<String, List<Map<String, Object>>> getAllTransactionByIdTennant(Long profileId);
-
-    Map<String, List<Map<String, Object>>> getAllTransactionByIdAdmin();
-//    Page<Transaction> getAllTransactionHistoryByIdSeekerWithPagination(Long seekerId, Pageable pageable);
-
 
     ResponseEntity<Map<String, Object>> uploadProofOfPayment(
             Long transactionId, UploadProofOfPayment uploadSpoofOfPayment) throws IOException;

@@ -36,4 +36,23 @@ public class TransactionControllerTennant {
 
         return new ResponseEntity<>(res.success(list, "success get list kost!", 200), HttpStatus.OK);
     }
+
+    @PostMapping(value = "/approve/{transactionId}")
+    public ResponseEntity<Map<String, Object>> approveTransaction(@PathVariable("transactionId") Long transactionId) {
+        boolean approvedTransaction = transactionServiceImpl.approveTransaction(transactionId);
+
+        if (!approvedTransaction) {
+            return res.clientError("transaction doesn't exist");
+        }
+        return res.resSuccess(1, "success", 201);    }
+
+    @DeleteMapping(value = "/reject/{transactionId}")
+    public ResponseEntity<Map<String, Object>> rejectTransaction(@PathVariable("transactionId") Long transactionId) {
+        boolean rejectedTransaction = transactionServiceImpl.rejectTransaction(transactionId);
+
+        if (!rejectedTransaction) {
+            return res.clientError("transaction doesn't exist");
+        }
+        return res.resSuccess(1, "success", 200);    }
+
 }

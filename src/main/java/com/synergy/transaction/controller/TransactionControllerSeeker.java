@@ -36,4 +36,14 @@ public class TransactionControllerSeeker {
 
         return new ResponseEntity<>(res.success(list, "success get list kost!", 200), HttpStatus.OK);
     }
+
+    @DeleteMapping(value = "/{transactionId}")
+    public ResponseEntity<Map<String, Object>> deleteTransactionBySeeker(@PathVariable("transactionId") Long transactionId) {
+        boolean deleteTransaction = transactionServiceImpl.softDeleteTransaction(transactionId);
+
+        if (!deleteTransaction) {
+            return res.clientError("transaction doesn't exist");
+        }
+        return res.resSuccess(1, "success", 200);
+    }
 }
