@@ -1,10 +1,10 @@
 package com.synergy.transaction.service;
 
-import java.util.List;
+import com.synergy.transaction.dto.PostBookingDto;
+import org.springframework.http.ResponseEntity;
+
 import java.util.Map;
 
 public interface TransactionService {
-    List<Map<String, Object>> getAllTransactionByProfileId(Long profileId);
-
-    boolean deleteTransaction(Long profileId, Long transactionId);
+    ResponseEntity<Map<String, Object>> bookKost(Long profileId, Long roomId, PostBookingDto postBookingDto);
 }

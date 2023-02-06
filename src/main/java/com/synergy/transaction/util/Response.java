@@ -18,9 +18,9 @@ public class Response {
 
         HttpStatus httpStatus = HttpStatus.OK;
 
-       if(statusCode == 201) {
-           httpStatus = HttpStatus.CREATED;
-       }
+        if (statusCode == 201) {
+            httpStatus = HttpStatus.CREATED;
+        }
 
         return new ResponseEntity<>(res, httpStatus);
     }
@@ -39,7 +39,7 @@ public class Response {
         return new ResponseEntity<>(res, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    public ResponseEntity<Map<String, Object>> notFoundError(Object message ) {
+    public ResponseEntity<Map<String, Object>> notFoundError(Object message) {
         Map<String, Object> res = new HashMap<>();
         res.put("message", message);
         res.put("status", 404);

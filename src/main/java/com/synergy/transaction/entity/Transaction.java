@@ -19,16 +19,12 @@ public class Transaction {
     @Column(name = "transaction_id")
     private Long transactionId;
 
-    @Column(name = "booking_code", nullable = false)
-    private String bookingCode;
+    @Column(name = "invoice_code", unique = true)
+    private String invoiceCode;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "profile_id", nullable = false)
-    private Profile profile;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_id", nullable = false)
-    private Room room;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "booking_id", nullable = false)
+    private Booking booking;
 
     @Column(name = "payment_method")
     private String paymentMethod;
@@ -45,8 +41,11 @@ public class Transaction {
     @Column(name = "deadline_payment")
     private LocalDateTime deadlinePayment;
 
-    @Column(name = "invoice_code")
-    private String invoiceCode;
+    @Column(name = "proof_of_payment", columnDefinition = "TEXT")
+    private String proofOfPayment;
+
+    @Column(name = "status", nullable = false)
+    private String status;
 
     @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
     @CreationTimestamp
