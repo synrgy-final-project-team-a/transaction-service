@@ -29,9 +29,6 @@ public class Transaction {
     @Column(name = "payment_method")
     private String paymentMethod;
 
-    @Column(name = "status")
-    private String status;
-
     @Column(name = "check_in", nullable = false)
     private LocalDateTime checkIn;
 
