@@ -11,6 +11,8 @@ import com.synergy.transaction.util.RandomGenerator;
 import com.synergy.transaction.util.Response;
 import com.synergy.transaction.util.UploadFile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -147,4 +149,12 @@ public class TransactionServiceImpl implements TransactionService {
 
         return res.resSuccess(formattedResponse, "success", 200);
     }
+
+     @Override
+    public Page<Transaction> getAllTransactionHistoryByIdSeekerWithPagination(Long seekerId, Pageable pageable) {
+        return transactionRepository.findAllBySeekerId(seekerId, pageable);
+    }
+
+
+
 }
