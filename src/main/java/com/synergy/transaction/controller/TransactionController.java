@@ -27,7 +27,6 @@ public class TransactionController {
             @ModelAttribute @Valid PostBookingDto postBookingDto
     ) {
         try {
-            System.out.println(postBookingDto.getPrice_id());
             return transactionServiceImpl.bookKost(profileId, roomId, postBookingDto);
         } catch (Exception e) {
             return res.internalServerError(e.getMessage());
