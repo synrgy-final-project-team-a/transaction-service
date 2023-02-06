@@ -1,12 +1,25 @@
 package com.synergy.transaction.service;
 
+import com.synergy.transaction.entity.Transaction;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
+import com.synergy.transaction.dto.PostBookingDto;
+import com.synergy.transaction.dto.UploadProofOfPayment;
+import org.springframework.http.ResponseEntity;
+
+import java.io.IOException;
 import java.util.Map;
 
 public interface TransactionService {
-    List<Map<String, Object>> getAllTransactionByProfileId(Long profileId);
+    ResponseEntity<Map<String, Object>> bookKost(Long profileId, Long roomId, PostBookingDto postBookingDto);
 
     boolean deleteTransaction(Long profileId, Long transactionId);
 
-    public Map getTransactionByIdSeeker(Long transaction_id);
+    Page<Transaction> getAllTransactionHistoryByIdSeekerWithPagination(Long seekerId, Pageable pageable);
+
+
+    ResponseEntity<Map<String, Object>> uploadProofOfPayment(
+            Long transactionId, UploadProofOfPayment uploadSpoofOfPayment) throws IOException;
 }
