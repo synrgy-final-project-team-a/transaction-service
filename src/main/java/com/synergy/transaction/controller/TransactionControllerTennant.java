@@ -15,6 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/tennant/transactions")
+@CrossOrigin("*")
 public class TransactionControllerTennant {
     @Autowired
     private TransactionServiceImpl transactionServiceImpl;

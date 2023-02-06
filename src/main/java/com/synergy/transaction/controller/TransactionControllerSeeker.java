@@ -15,6 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/seeker/transactions")
+@CrossOrigin("*")
 public class TransactionControllerSeeker {
     @Autowired
     private TransactionServiceImpl transactionServiceImpl;

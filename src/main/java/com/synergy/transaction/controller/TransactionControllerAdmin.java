@@ -18,6 +18,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/admin/transactions")
+@CrossOrigin("*")
 public class TransactionControllerAdmin {
 
     @Autowired
