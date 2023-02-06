@@ -17,6 +17,14 @@ public interface TransactionService {
 
     boolean deleteTransaction(Long profileId, Long transactionId);
 
+    Boolean approveTransaction(Long transactionId);
+
+    Boolean rejectTransaction(Long transactionId);
+
+    Boolean softDeleteTransaction(Long transactionId);
+    Map<String, List<Map<String, Object>>> getAllTransactionByIdTennant(Long profileId);
+
+    Map<String, List<Map<String, Object>>> getAllTransactionByIdAdmin();
 //    Page<Transaction> getAllTransactionHistoryByIdSeekerWithPagination(Long seekerId, Pageable pageable);
 
 
