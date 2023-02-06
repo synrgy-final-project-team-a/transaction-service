@@ -1,16 +1,20 @@
 package com.synergy.transaction.service.impl;
 
 import com.synergy.transaction.config.BookingDuration;
+import com.synergy.transaction.config.CloudFolder;
 import com.synergy.transaction.dto.PostBookingDto;
+import com.synergy.transaction.dto.UploadProofOfPayment;
 import com.synergy.transaction.entity.*;
 import com.synergy.transaction.repository.*;
 import com.synergy.transaction.service.TransactionService;
 import com.synergy.transaction.util.RandomGenerator;
 import com.synergy.transaction.util.Response;
+import com.synergy.transaction.util.UploadFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -36,6 +40,8 @@ public class TransactionServiceImpl implements TransactionService {
     @Autowired
     Response res;
 
+    @Autowired
+    UploadFile uploadFile;
 
     @Override
     public ResponseEntity<Map<String, Object>> bookKost(Long profileId, Long roomId, PostBookingDto postBookingDto) {
@@ -72,10 +78,11 @@ public class TransactionServiceImpl implements TransactionService {
         booking.setProfile(user.get());
         booking.setRoom(room.get());
 
-        Booking bookingSaved = bookingRepository.save(booking);
+        // save booking detail
+        bookingRepository.save(booking);
 
         // insert booking instance to transaction class
-        transaction.setBooking(bookingSaved);
+        transaction.setBooking(booking);
 
         // generate invoice code and insert to transaction table
         transaction.setInvoiceCode(RandomGenerator.getTransactionCode(profileId));
@@ -98,14 +105,45 @@ public class TransactionServiceImpl implements TransactionService {
 
         Map<String, Object> formattedResponse = new HashMap<>();
 
-        formattedResponse.put("bookingId", bookingSaved.getBookingId());
-        formattedResponse.put("bookingCode", bookingSaved.getBookingCode());
-        formattedResponse.put("name", bookingSaved.getName());
-        formattedResponse.put("gender", bookingSaved.getGender());
-        formattedResponse.put("job", bookingSaved.getJob());
-        formattedResponse.put("phoneNumber", bookingSaved.getPhoneNumber());
-        formattedResponse.put("profileId", bookingSaved.getProfile().getId());
-        formattedResponse.put("roomId", bookingSaved.getRoom().getId());
+        formattedResponse.put("bookingId", booking.getBookingId());
+        formattedResponse.put("bookingCode", booking.getBookingCode());
+        formattedResponse.put("name", booking.getName());
+        formattedResponse.put("gender", booking.getGender());
+        formattedResponse.put("job", booking.getJob());
+        formattedResponse.put("phoneNumber", booking.getPhoneNumber());
+        formattedResponse.put("profileId", booking.getProfile().getId());
+        formattedResponse.put("roomId", booking.getRoom().getId());
+
+        return res.resSuccess(formattedResponse, "success", 200);
+    }
+
+    @Override
+    public ResponseEntity<Map<String, Object>> uploadProofOfPayment(
+            Long transactionId,
+            UploadProofOfPayment uploadProofOfPayment
+    ) throws IOException {
+        Optional<Transaction> transaction = transactionRepository.findById(transactionId);
+
+        if (!transaction.isPresent()) {
+            return res.notFoundError("transaction doesn't exist");
+        }
+
+        // upload image
+        String image = uploadFile
+                .UploadSingleFile(uploadProofOfPayment
+                        .getFile(), CloudFolder.TRANSACTION_FOLDER);
+
+        transaction.get().setProofOfPayment(image);
+        transaction.get().setDeadlinePayment(null);
+        transaction.get().setStatus("REVIEWED");
+
+        // save updated data
+        transactionRepository.save(transaction.get());
+
+        Map<String, Object> formattedResponse = new HashMap<>();
+        formattedResponse.put("transactionId", transaction.get().getTransactionId());
+        formattedResponse.put("invoiceCode", transaction.get().getInvoiceCode());
+        formattedResponse.put("status", transaction.get().getStatus());
 
         return res.resSuccess(formattedResponse, "success", 200);
     }

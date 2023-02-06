@@ -1,6 +1,7 @@
 package com.synergy.transaction.controller;
 
 import com.synergy.transaction.dto.PostBookingDto;
+import com.synergy.transaction.dto.UploadProofOfPayment;
 import com.synergy.transaction.service.impl.TransactionServiceImpl;
 import com.synergy.transaction.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,18 @@ public class TransactionController {
     ) {
         try {
             return transactionServiceImpl.bookKost(profileId, roomId, postBookingDto);
+        } catch (Exception e) {
+            return res.internalServerError(e.getMessage());
+        }
+    }
+
+    @PutMapping(value = "/transaction/{transactionId}")
+    public ResponseEntity<Map<String, Object>> uploadTransactionSpoofImage(
+            @PathVariable("transactionId") Long transactionId,
+            @ModelAttribute @Valid UploadProofOfPayment uploadProofOfPayment
+    ) {
+        try {
+            return transactionServiceImpl.uploadProofOfPayment(transactionId, uploadProofOfPayment);
         } catch (Exception e) {
             return res.internalServerError(e.getMessage());
         }
