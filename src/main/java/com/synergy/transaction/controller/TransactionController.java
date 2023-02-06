@@ -35,7 +35,7 @@ public class TransactionController {
     }
 
     @PutMapping(value = "/transaction/{transactionId}")
-    public ResponseEntity<Map<String, Object>> uploadTransactionSpoofImage(
+    public ResponseEntity<Map<String, Object>> uploadTransactionProofImage(
             @PathVariable("transactionId") Long transactionId,
             @ModelAttribute @Valid UploadProofOfPayment uploadProofOfPayment
     ) {
