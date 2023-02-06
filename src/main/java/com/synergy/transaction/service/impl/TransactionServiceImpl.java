@@ -17,9 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -120,6 +118,11 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
+    public boolean deleteTransaction(Long profileId, Long transactionId) {
+        return false;
+    }
+
+    @Override
     public ResponseEntity<Map<String, Object>> uploadProofOfPayment(
             Long transactionId,
             UploadProofOfPayment uploadProofOfPayment
@@ -150,11 +153,70 @@ public class TransactionServiceImpl implements TransactionService {
         return res.resSuccess(formattedResponse, "success", 200);
     }
 
-     @Override
-    public Page<Transaction> getAllTransactionHistoryByIdSeekerWithPagination(Long seekerId, Pageable pageable) {
-        return transactionRepository.findAllBySeekerId(seekerId, pageable);
+    @Override
+    public ResponseEntity<Map<String, Object>> getTransactionHistoryByIdBooking(Long bookingId) {
+        List<Map<String, Object>> data = bookingRepository.getTransactionById(bookingId);
+        List<Map<String, Object>> booking = new ArrayList<>();
+
+        for (Map<String, Object> response : data) {
+            Map<String, Object> itemBooking = new HashMap<>();
+            //Add field room
+            itemBooking.put("booking_id", response.get("booking_id"));
+            itemBooking.put("booking_code", response.get("booking_code"));
+            itemBooking.put("kost_name", response.get("kost_name"));
+            itemBooking.put("room_name", response.get("room_name"));
+            itemBooking.put("address", response.get("address"));
+            itemBooking.put("city", response.get("city"));
+            itemBooking.put("province", response.get("province"));
+            itemBooking.put("price", response.get("price"));
+            itemBooking.put("duration_type", response.get("duration_type"));
+            itemBooking.put("status", response.get("status"));
+            itemBooking.put("date_payment", response.get("updated_at"));
+            itemBooking.put("payment_method", response.get("payment_method"));
+            itemBooking.put("profile_id", response.get("id"));
+            itemBooking.put("bank_name", response.get("bank_name"));
+
+            booking.add(itemBooking);
+        }
+
+        return booking.size() > 0 ? res.resSuccess(booking, "success", 200) : res.notFoundError("booking doesn't exist");
+
     }
 
+    @Override
+    public ResponseEntity<Map<String, Object>> getTransactionHistoryByIdBookingAdmin(Long bookingId) {
+        List<Map<String, Object>> data = bookingRepository.getTransactionByIdAdmin(bookingId);
+        List<Map<String, Object>> booking = new ArrayList<>();
+
+        for (Map<String, Object> response : data) {
+            Map<String, Object> itemBooking = new HashMap<>();
+            //Add field room
+            itemBooking.put("booking_id", response.get("booking_id"));
+            itemBooking.put("booking_code", response.get("booking_code"));
+            itemBooking.put("kost_name", response.get("kost_name"));
+            itemBooking.put("room_name", response.get("room_name"));
+            itemBooking.put("address", response.get("address"));
+            itemBooking.put("city", response.get("city"));
+            itemBooking.put("province", response.get("province"));
+            itemBooking.put("price", response.get("price"));
+            itemBooking.put("duration_type", response.get("duration_type"));
+            itemBooking.put("status", response.get("status"));
+            itemBooking.put("date_payment", response.get("updated_at"));
+            itemBooking.put("payment_method", response.get("payment_method"));
+            itemBooking.put("profile_id", response.get("id"));
+            itemBooking.put("bank_name", response.get("bank_name"));
+
+            booking.add(itemBooking);
+        }
+
+        return booking.size() > 0 ? res.resSuccess(booking, "success", 200) : res.notFoundError("booking doesn't exist");
+
+    }
+
+//    @Override
+//    public Page<Transaction> getAllTransactionHistoryByIdSeekerWithPagination(Long seekerId, Pageable pageable) {
+//        return transactionRepository.findAllBySeekerId(seekerId, pageable);
+//    }
 
 
 }

@@ -46,5 +46,15 @@ public class TransactionController {
         }
     }
 
+    @GetMapping(value = "/{bookingId}")
+    public ResponseEntity<Map<String, Object>> getByBookingId(
+            @PathVariable("bookingId") Long profileId
+    ) {
+        try {
+            return transactionServiceImpl.getTransactionHistoryByIdBooking(profileId);
+        } catch (Exception e) {
+            return res.internalServerError(e.getMessage());
+        }
+    }
 
 }

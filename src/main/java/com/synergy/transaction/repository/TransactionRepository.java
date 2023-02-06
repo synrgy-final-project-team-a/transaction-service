@@ -8,11 +8,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
-    List<Transaction> findByProfileId(Long profileId);
+//    List<Transaction> findByProfileId(Long profileId);
+//
+//    Optional<Transaction> findByTransactionIdAndProfileId(Long id, Long profileId);
 
-    Optional<Transaction> findByTransactionIdAndProfileId(Long id, Long profileId);
-
-    @Query("SELECT t FROM Transaction t WHERE t.seeker.id = :seekerId")
-    Page<Transaction> findAllBySeekerId(@Param("seekerId") Long seekerId, Pageable pageable);
+//    @Query("SELECT t FROM Transaction t WHERE t.seeker.id = :seekerId")
+//    Page<Transaction> findAllBySeekerId(@Param("seekerId") Long seekerId, Pageable pageable);
 
 }

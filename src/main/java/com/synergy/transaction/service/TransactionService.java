@@ -17,9 +17,12 @@ public interface TransactionService {
 
     boolean deleteTransaction(Long profileId, Long transactionId);
 
-    Page<Transaction> getAllTransactionHistoryByIdSeekerWithPagination(Long seekerId, Pageable pageable);
+//    Page<Transaction> getAllTransactionHistoryByIdSeekerWithPagination(Long seekerId, Pageable pageable);
 
 
     ResponseEntity<Map<String, Object>> uploadProofOfPayment(
             Long transactionId, UploadProofOfPayment uploadSpoofOfPayment) throws IOException;
+
+    ResponseEntity<Map<String, Object>> getTransactionHistoryByIdBooking(Long bookingId);
+    ResponseEntity<Map<String, Object>> getTransactionHistoryByIdBookingAdmin(Long bookingId);
 }

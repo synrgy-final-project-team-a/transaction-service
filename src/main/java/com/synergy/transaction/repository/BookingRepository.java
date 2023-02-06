@@ -64,4 +64,53 @@ public Page<Map<String, Object>> getAllTransactionByIdTennant(@Param(value = "pr
             "JOIN price p on p.room_id = r.room_id\n" +
             "JOIN kost k on k.kost_id = r.kost_id \n")
     public Page<Map<String, Object>> getAllTransactionByAdmin( Pageable pageable);
+
+    @Query(nativeQuery = true, value = "SELECT \n" +
+            "k.kost_name,\n" +
+            "b.booking_id,\n" +
+            "b.booking_code,\n" +
+            "k.address,\n" +
+            "r.room_name,\n" +
+            "k.city,\n" +
+            "k.province,\n" +
+            "p.price,\n" +
+            "t.status,\n" +
+            "t.payment_method,\n" +
+            "p.duration_type,\n" +
+            "t.updated_at,\n" +
+            "pro.id,\n" +
+            "pro.bank_name \n" +
+            "FROM booking b \n" +
+            "JOIN transaction t on t.booking_id = b.booking_id \n" +
+            "JOIN room r on b.room_id  = r.room_id\n" +
+            "JOIN price p on p.room_id = r.room_id\n" +
+            "JOIN kost k on k.kost_id = r.kost_id \n" +
+            "JOIN profile pro on pro.id = k.profile_id \n" +
+            "WHERE b.booking_id = :booking_id\n" +
+            "AND t.deleted_at is null")
+    public List<Map<String, Object>> getTransactionById(@Param(value = "booking_id") Long bookingId);
+
+    @Query(nativeQuery = true, value = "SELECT \n" +
+            "k.kost_name,\n" +
+            "b.booking_id,\n" +
+            "b.booking_code,\n" +
+            "k.address,\n" +
+            "r.room_name,\n" +
+            "k.city,\n" +
+            "k.province,\n" +
+            "p.price,\n" +
+            "t.status,\n" +
+            "t.payment_method,\n" +
+            "p.duration_type,\n" +
+            "t.updated_at,\n" +
+            "pro.id,\n" +
+            "pro.bank_name \n" +
+            "FROM booking b \n" +
+            "JOIN transaction t on t.booking_id = b.booking_id \n" +
+            "JOIN room r on b.room_id  = r.room_id\n" +
+            "JOIN price p on p.room_id = r.room_id\n" +
+            "JOIN kost k on k.kost_id = r.kost_id \n" +
+            "JOIN profile pro on pro.id = k.profile_id \n" +
+            "WHERE b.booking_id = :booking_id\n")
+    public List<Map<String, Object>> getTransactionByIdAdmin(@Param(value = "booking_id") Long bookingId);
 }
