@@ -25,11 +25,11 @@ public class Response {
         return new ResponseEntity<>(res, httpStatus);
     }
 
-    public Map<String, Object> clientError(Object message) {
+    public ResponseEntity<Map<String, Object>> clientError(Object message) {
         Map<String, Object> res = new HashMap<>();
         res.put("message", message);
         res.put("status_code", 400);
-        return res;
+        return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
     }
 
     public ResponseEntity<Map<String, Object>> internalServerError(Object message) {
@@ -39,10 +39,10 @@ public class Response {
         return new ResponseEntity<>(res, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    public Map<String, Object> notFoundError(Object message) {
+    public ResponseEntity<Map<String, Object>> notFoundError(Object message) {
         Map<String, Object> res = new HashMap<>();
         res.put("message", message);
         res.put("status", 404);
-        return res;
+        return new ResponseEntity<>(res, HttpStatus.NOT_FOUND);
     }
 }

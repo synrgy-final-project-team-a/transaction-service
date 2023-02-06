@@ -2,6 +2,7 @@ package com.synergy.transaction.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -11,11 +12,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class PostBookingDto {
 
-    @NotNull
+    @NotNull(message = "name shouldn't null")
     @NotBlank
     private String name;
 
-    @NotNull
+    @NotNull(message = "gender shouldn't null")
     @NotBlank
     private String gender;
 
@@ -25,13 +26,12 @@ public class PostBookingDto {
 
     @NotNull
     @NotBlank
-    private String phoneNumber;
+    private String phone_number;
 
     @NotNull
-    @NotBlank
-    private LocalDateTime checkIn;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime check_in;
 
     @NotNull
-    @NotBlank
-    private Long priceId;
+    private Long price_id;
 }
