@@ -13,25 +13,8 @@ import java.util.Map;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Long> {
-@Query(nativeQuery = true, value = "SELECT \n" +
-        "k.kost_name,\n" +
-        "b.booking_id,\n" +
-        "b.booking_code,\n" +
-        "k.address,\n" +
-        "k.city,\n" +
-        "k.province,\n" +
-        "p.price,\n" +
-        "t.status\n" +
-        "FROM booking b \n" +
-        "JOIN transaction t on t.booking_id = b.booking_id \n" +
-        "JOIN room r on b.room_id  = r.room_id\n" +
-        "JOIN price p on p.room_id = r.room_id\n" +
-        "JOIN kost k on k.kost_id = r.kost_id \n" +
-        "WHERE k.profile_id = :profile_id\n" +
-        "AND t.deleted_at is null")
-public Page<Map<String, Object>> getAllTransactionByIdTennant(@Param(value = "profile_id") Long profileId, Pageable pageable);
-
     @Query(nativeQuery = true, value = "SELECT \n" +
+            "t.transaction_id,\n" +
             "k.kost_name,\n" +
             "b.booking_id,\n" +
             "b.booking_code,\n" +
@@ -39,15 +22,70 @@ public Page<Map<String, Object>> getAllTransactionByIdTennant(@Param(value = "pr
             "k.city,\n" +
             "k.province,\n" +
             "p.price,\n" +
-            "t.status\n" +
+            "t.status,\n" +
+            "t.deadline_payment\n" +
+            "FROM booking b \n" +
+            "JOIN transaction t on t.booking_id = b.booking_id \n" +
+            "JOIN room r on b.room_id  = r.room_id\n" +
+            "JOIN price p on p.room_id = r.room_id\n" +
+            "JOIN kost k on k.kost_id = r.kost_id \n" +
+            "WHERE k.profile_id = :profile_id\n" +
+            "AND t.deleted_at is null\n" +
+            "ORDER BY t.updated_at DESC"
+    )
+    Page<Map<String, Object>> getAllTransactionByIdTenant(@Param(value = "profile_id") Long profileId, Pageable pageable);
+
+    @Query(nativeQuery = true, value = "SELECT \n" +
+            "t.transaction_id,\n" +
+            "t.status,\n" +
+            "t.deadline_payment\n" +
+            "FROM booking b \n" +
+            "JOIN transaction t on t.booking_id = b.booking_id \n" +
+            "JOIN room r on b.room_id  = r.room_id\n" +
+            "JOIN price p on p.room_id = r.room_id\n" +
+            "JOIN kost k on k.kost_id = r.kost_id \n" +
+            "WHERE k.profile_id = :profile_id\n" +
+            "AND t.deleted_at is null\n" +
+            "ORDER BY t.updated_at DESC"
+    )
+    Page<Map<String, Object>> getListTransactionIdOfTenant(@Param(value = "profile_id") Long profileId, Pageable pageable);
+
+    @Query(nativeQuery = true, value = "SELECT \n" +
+            "t.transaction_id,\n" +
+            "k.kost_name,\n" +
+            "b.booking_id,\n" +
+            "b.booking_code,\n" +
+            "k.address,\n" +
+            "k.city,\n" +
+            "k.province,\n" +
+            "p.price,\n" +
+            "t.status,\n" +
+            "t.deadline_payment\n" +
             "FROM booking b \n" +
             "JOIN transaction t on t.booking_id = b.booking_id \n" +
             "JOIN room r on b.room_id  = r.room_id\n" +
             "JOIN price p on p.room_id = r.room_id\n" +
             "JOIN kost k on k.kost_id = r.kost_id \n" +
             "WHERE b.profile_id = :profile_id\n" +
-            "AND t.deleted_at is null")
-    public Page<Map<String, Object>> getAllTransactionByIdSeeker(@Param(value = "profile_id") Long profileId, Pageable pageable);
+            "AND t.deleted_at is null\n" +
+            "ORDER BY t.updated_at DESC"
+    )
+    Page<Map<String, Object>> getAllTransactionByIdSeeker(@Param(value = "profile_id") Long profileId, Pageable pageable);
+
+    @Query(nativeQuery = true, value = "SELECT \n" +
+            "t.transaction_id,\n" +
+            "t.status,\n" +
+            "t.deadline_payment\n" +
+            "FROM booking b \n" +
+            "JOIN transaction t on t.booking_id = b.booking_id \n" +
+            "JOIN room r on b.room_id  = r.room_id\n" +
+            "JOIN price p on p.room_id = r.room_id\n" +
+            "JOIN kost k on k.kost_id = r.kost_id \n" +
+            "WHERE b.profile_id = :profile_id\n" +
+            "AND t.deleted_at is null\n" +
+            "ORDER BY t.updated_at DESC"
+    )
+    Page<Map<String, Object>> getListTransactionIdOfSeeker(@Param(value = "profile_id") Long profileId, Pageable pageable);
 
     @Query(nativeQuery = true, value = "SELECT \n" +
             "k.kost_name,\n" +
@@ -63,7 +101,7 @@ public Page<Map<String, Object>> getAllTransactionByIdTennant(@Param(value = "pr
             "JOIN room r on b.room_id  = r.room_id\n" +
             "JOIN price p on p.room_id = r.room_id\n" +
             "JOIN kost k on k.kost_id = r.kost_id \n")
-    public Page<Map<String, Object>> getAllTransactionByAdmin( Pageable pageable);
+    Page<Map<String, Object>> getAllTransactionByAdmin(Pageable pageable);
 
     @Query(nativeQuery = true, value = "SELECT \n" +
             "k.kost_name,\n" +
@@ -88,7 +126,7 @@ public Page<Map<String, Object>> getAllTransactionByIdTennant(@Param(value = "pr
             "JOIN profile pro on pro.id = k.profile_id \n" +
             "WHERE b.booking_id = :booking_id\n" +
             "AND t.deleted_at is null")
-    public List<Map<String, Object>> getTransactionById(@Param(value = "booking_id") Long bookingId);
+    List<Map<String, Object>> getTransactionById(@Param(value = "booking_id") Long bookingId);
 
     @Query(nativeQuery = true, value = "SELECT \n" +
             "k.kost_name,\n" +
@@ -112,5 +150,5 @@ public Page<Map<String, Object>> getAllTransactionByIdTennant(@Param(value = "pr
             "JOIN kost k on k.kost_id = r.kost_id \n" +
             "JOIN profile pro on pro.id = k.profile_id \n" +
             "WHERE b.booking_id = :booking_id\n")
-    public List<Map<String, Object>> getTransactionByIdAdmin(@Param(value = "booking_id") Long bookingId);
+    List<Map<String, Object>> getTransactionByIdAdmin(@Param(value = "booking_id") Long bookingId);
 }

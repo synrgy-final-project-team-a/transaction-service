@@ -1,17 +1,11 @@
 package com.synergy.transaction.service.impl;
 
-import com.synergy.transaction.entity.Transaction;
-import com.synergy.transaction.entity.enumeration.EStatus;
-import com.synergy.transaction.repository.TransactionRepository;
-import com.synergy.transaction.service.TransactionService;
-import com.synergy.transaction.util.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.synergy.transaction.config.BookingDuration;
 import com.synergy.transaction.config.CloudFolder;
 import com.synergy.transaction.dto.PostBookingDto;
 import com.synergy.transaction.dto.UploadProofOfPayment;
 import com.synergy.transaction.entity.*;
+import com.synergy.transaction.entity.enumeration.EStatus;
 import com.synergy.transaction.repository.*;
 import com.synergy.transaction.service.TransactionService;
 import com.synergy.transaction.util.RandomGenerator;
@@ -23,16 +17,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
-    private static Logger logger = LoggerFactory.getLogger(TransactionServiceImpl.class);
 
     @Autowired
     TransactionRepository transactionRepository;
+
     @Autowired
     public Response res;
 
@@ -50,6 +45,66 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Autowired
     UploadFile uploadFile;
+
+    private ResponseEntity<Map<String, Object>> getMapResponseBooking(List<Map<String, Object>> data) {
+        List<Map<String, Object>> booking = new ArrayList<>();
+
+        for (Map<String, Object> response : data) {
+            Map<String, Object> itemBooking = new HashMap<>();
+            // Add field room
+            itemBooking.put("booking_id", response.get("booking_id"));
+            itemBooking.put("booking_code", response.get("booking_code"));
+            itemBooking.put("kost_name", response.get("kost_name"));
+            itemBooking.put("room_name", response.get("room_name"));
+            itemBooking.put("address", response.get("address"));
+            itemBooking.put("city", response.get("city"));
+            itemBooking.put("province", response.get("province"));
+            itemBooking.put("price", response.get("price"));
+            itemBooking.put("duration_type", response.get("duration_type"));
+            itemBooking.put("status", response.get("status"));
+            itemBooking.put("date_payment", response.get("updated_at"));
+            itemBooking.put("payment_method", response.get("payment_method"));
+            itemBooking.put("profile_id", response.get("id"));
+            itemBooking.put("bank_name", response.get("bank_name"));
+
+            booking.add(itemBooking);
+        }
+
+        return booking.size() > 0 ? res.resSuccess(booking, "success", 200)
+                : res.notFoundError("booking doesn't exist");
+    }
+
+    private void cancelTransaction(Page<Map<String, Object>> transactionList) {
+        LocalDateTime currentTime = LocalDateTime.now();
+
+        for (Map<String, Object> transaction : transactionList) {
+            String status = transaction.get("status").toString();
+            Object deadlinePaymentProps = transaction.get("deadline_payment");
+
+            Long transactionId = Long.parseLong(transaction.get("transaction_id").toString());
+
+            if ((deadlinePaymentProps != null) && (!EStatus.APPROVED.name().equals(status))) {
+
+                LocalDateTime deadlinePayment = LocalDateTime.parse(
+                        deadlinePaymentProps.toString().replace(" ", "T"),
+                        DateTimeFormatter.ISO_LOCAL_DATE_TIME
+                );
+
+                if (currentTime.isAfter(deadlinePayment)) {
+                    Optional<Transaction> transactionData = transactionRepository.findByTransactionId(transactionId);
+
+                    if (transactionData.isPresent()) {
+
+                        transactionData.get().setDeadlinePayment(null);
+                        transactionData.get().setStatus(EStatus.CANCELLED.name());
+
+                        transactionRepository.save(transactionData.get());
+                    }
+                }
+            }
+        }
+
+    }
 
     @Override
     public ResponseEntity<Map<String, Object>> bookKost(Long profileId, Long roomId, PostBookingDto postBookingDto) {
@@ -104,7 +159,7 @@ public class TransactionServiceImpl implements TransactionService {
                         BookingDuration.getDuration(
                                 price.get().getDurationType())));
         transaction.setDeadlinePayment(booking.getCreatedAt().plusDays(1));
-        transaction.setStatus("POSTED");
+        transaction.setStatus(EStatus.POSTED.name());
 
         // save transaction detail
         transactionRepository.save(transaction);
@@ -124,25 +179,19 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public boolean deleteTransaction(Long profileId, Long transactionId) {
-        return false;
-    }
-
-    @Override
     public Boolean approveTransaction(Long transactionId) {
-        try {
-            Transaction checkingData = transactionRepository.findByTransactionId(transactionId);
-            if (checkingData == null) {
-                return false;
-            }
-            checkingData.setStatus(EStatus.APPROVED.name());
-            checkingData.setDeadlinePayment(null);
-            checkingData.setInvoiceCode(RandomGenerator.getTransactionCode(checkingData.getTransactionId()));
-            Transaction done = transactionRepository.save(checkingData);
+        Optional<Transaction> transaction = transactionRepository.findByTransactionId(transactionId);
+
+        if (transaction.isPresent()) {
+            transaction.get().setStatus(EStatus.APPROVED.name());
+            transaction.get().setDeadlinePayment(null);
+
+            // save updated data
+            transactionRepository.save(transaction.get());
+
             return true;
-        } catch (Exception e) {
-            logger.error("Error approve transaction, {} " + e);
         }
+
         return false;
     }
 
@@ -161,8 +210,7 @@ public class TransactionServiceImpl implements TransactionService {
                         .getFile(), CloudFolder.TRANSACTION_FOLDER);
 
         transaction.get().setProofOfPayment(image);
-        transaction.get().setDeadlinePayment(null);
-        transaction.get().setStatus("REVIEWED");
+        transaction.get().setStatus(EStatus.REVIEWED.name());
 
         // save updated data
         transactionRepository.save(transaction.get());
@@ -178,99 +226,66 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public ResponseEntity<Map<String, Object>> getTransactionHistoryByIdBooking(Long bookingId) {
         List<Map<String, Object>> data = bookingRepository.getTransactionById(bookingId);
-        List<Map<String, Object>> booking = new ArrayList<>();
-
-        for (Map<String, Object> response : data) {
-            Map<String, Object> itemBooking = new HashMap<>();
-            // Add field room
-            itemBooking.put("booking_id", response.get("booking_id"));
-            itemBooking.put("booking_code", response.get("booking_code"));
-            itemBooking.put("kost_name", response.get("kost_name"));
-            itemBooking.put("room_name", response.get("room_name"));
-            itemBooking.put("address", response.get("address"));
-            itemBooking.put("city", response.get("city"));
-            itemBooking.put("province", response.get("province"));
-            itemBooking.put("price", response.get("price"));
-            itemBooking.put("duration_type", response.get("duration_type"));
-            itemBooking.put("status", response.get("status"));
-            itemBooking.put("date_payment", response.get("updated_at"));
-            itemBooking.put("payment_method", response.get("payment_method"));
-            itemBooking.put("profile_id", response.get("id"));
-            itemBooking.put("bank_name", response.get("bank_name"));
-
-            booking.add(itemBooking);
-        }
-
-        return booking.size() > 0 ? res.resSuccess(booking, "success", 200)
-                : res.notFoundError("booking doesn't exist");
+        return getMapResponseBooking(data);
 
     }
 
     @Override
     public ResponseEntity<Map<String, Object>> getTransactionHistoryByIdBookingAdmin(Long bookingId) {
         List<Map<String, Object>> data = bookingRepository.getTransactionByIdAdmin(bookingId);
-        List<Map<String, Object>> booking = new ArrayList<>();
+        return getMapResponseBooking(data);
 
-        for (Map<String, Object> response : data) {
-            Map<String, Object> itemBooking = new HashMap<>();
-            // Add field room
-            itemBooking.put("booking_id", response.get("booking_id"));
-            itemBooking.put("booking_code", response.get("booking_code"));
-            itemBooking.put("kost_name", response.get("kost_name"));
-            itemBooking.put("room_name", response.get("room_name"));
-            itemBooking.put("address", response.get("address"));
-            itemBooking.put("city", response.get("city"));
-            itemBooking.put("province", response.get("province"));
-            itemBooking.put("price", response.get("price"));
-            itemBooking.put("duration_type", response.get("duration_type"));
-            itemBooking.put("status", response.get("status"));
-            itemBooking.put("date_payment", response.get("updated_at"));
-            itemBooking.put("payment_method", response.get("payment_method"));
-            itemBooking.put("profile_id", response.get("id"));
-            itemBooking.put("bank_name", response.get("bank_name"));
+    }
 
-            booking.add(itemBooking);
-        }
+    @Override
+    public Page<Map<String, Object>> getSeekerTransactions(Long profileId, Pageable pageable) {
+        // update recently status of payment when deadline payment is over
+        Page<Map<String, Object>> seekerTransactions = bookingRepository.getListTransactionIdOfSeeker(profileId, pageable);
+        cancelTransaction(seekerTransactions);
 
-        return booking.size() > 0 ? res.resSuccess(booking, "success", 200)
-                : res.notFoundError("booking doesn't exist");
+        return bookingRepository.getAllTransactionByIdSeeker(profileId, pageable);
+    }
 
+    @Override
+    public Page<Map<String, Object>> getTenantTransactions(Long profileId, Pageable pageable) {
+        // update recently status of payment when deadline payment is over
+        Page<Map<String, Object>> tenantTransactions = bookingRepository.getListTransactionIdOfTenant(profileId, pageable);
+        cancelTransaction(tenantTransactions);
+
+        return bookingRepository.getAllTransactionByIdTenant(profileId, pageable);
     }
 
     @Override
     public Boolean rejectTransaction(Long transactionId) {
-        try {
-            Transaction checkingData = transactionRepository.findByTransactionId(transactionId);
-            if (checkingData == null) {
-                return false;
-            }
-            checkingData.setStatus(EStatus.CANCELLED.name());
-            checkingData.setDeadlinePayment(null);
-            Transaction done = transactionRepository.save(checkingData);
-            return true;
+        Optional<Transaction> transaction = transactionRepository.findByTransactionId(transactionId);
 
-        } catch (Exception e) {
-            logger.error("Error approve transaction, {} " + e);
+        if (transaction.isPresent()) {
+            transaction.get().setStatus(EStatus.REJECTED.name());
+            transaction.get().setDeadlinePayment(null);
+
+            // save updated data
+            transactionRepository.save(transaction.get());
+
+            return true;
         }
+
         return false;
     }
 
     @Override
-    public Boolean softDeleteTransaction(Long transactionId) {
-        try {
-            Transaction checkingData = transactionRepository.findByTransactionId(transactionId);
-            if (checkingData == null) {
-                return false;
-            }
-            checkingData.setStatus(EStatus.CANCELLED.name());
-            checkingData.setDeadlinePayment(null);
-            checkingData.setDeletedAt(new Timestamp(System.currentTimeMillis()).toLocalDateTime());
-            Transaction done = transactionRepository.save(checkingData);
-            return true;
+    public Boolean cancelTransaction(Long transactionId) {
+        Optional<Transaction> transaction = transactionRepository.findByTransactionId(transactionId);
 
-        } catch (Exception e) {
-            logger.error("Error approve transaction, {} " + e);
+        if (transaction.isPresent()) {
+            transaction.get().setStatus(EStatus.CANCELLED.name());
+            transaction.get().setDeadlinePayment(null);
+
+            // save updated data
+            transactionRepository.save(transaction.get());
+
+            return true;
         }
+
         return false;
     }
 }
