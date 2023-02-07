@@ -22,30 +22,7 @@ public class TransactionController {
     @Autowired
     private Response res;
 
-    @PostMapping(value = "/user/{profileId}/room/{roomId}")
-    public ResponseEntity<Map<String, Object>> createBookingRoom(
-            @PathVariable("profileId") Long profileId,
-            @PathVariable("roomId") Long roomId,
-            @ModelAttribute @Valid PostBookingDto postBookingDto
-    ) {
-        try {
-            return transactionServiceImpl.bookKost(profileId, roomId, postBookingDto);
-        } catch (Exception e) {
-            return res.internalServerError(e.getMessage());
-        }
-    }
 
-    @PutMapping(value = "/transaction/{transactionId}")
-    public ResponseEntity<Map<String, Object>> uploadTransactionSpoofImage(
-            @PathVariable("transactionId") Long transactionId,
-            @ModelAttribute @Valid UploadProofOfPayment uploadProofOfPayment
-    ) {
-        try {
-            return transactionServiceImpl.uploadProofOfPayment(transactionId, uploadProofOfPayment);
-        } catch (Exception e) {
-            return res.internalServerError(e.getMessage());
-        }
-    }
 
     @GetMapping(value = "/{bookingId}")
     public ResponseEntity<Map<String, Object>> getByBookingId(
