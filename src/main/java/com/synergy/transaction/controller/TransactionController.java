@@ -13,6 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/v1/transactions")
+@CrossOrigin("*")
 public class TransactionController {
 
     @Autowired
@@ -21,30 +22,17 @@ public class TransactionController {
     @Autowired
     private Response res;
 
-    @PostMapping(value = "/user/{profileId}/room/{roomId}")
-    public ResponseEntity<Map<String, Object>> createBookingRoom(
-            @PathVariable("profileId") Long profileId,
-            @PathVariable("roomId") Long roomId,
-            @ModelAttribute @Valid PostBookingDto postBookingDto
+
+
+    @GetMapping(value = "/{bookingId}")
+    public ResponseEntity<Map<String, Object>> getByBookingId(
+            @PathVariable("bookingId") Long profileId
     ) {
         try {
-            return transactionServiceImpl.bookKost(profileId, roomId, postBookingDto);
+            return transactionServiceImpl.getTransactionHistoryByIdBooking(profileId);
         } catch (Exception e) {
             return res.internalServerError(e.getMessage());
         }
     }
-
-    @PutMapping(value = "/transaction/{transactionId}")
-    public ResponseEntity<Map<String, Object>> uploadTransactionProofImage(
-            @PathVariable("transactionId") Long transactionId,
-            @ModelAttribute @Valid UploadProofOfPayment uploadProofOfPayment
-    ) {
-        try {
-            return transactionServiceImpl.uploadProofOfPayment(transactionId, uploadProofOfPayment);
-        } catch (Exception e) {
-            return res.internalServerError(e.getMessage());
-        }
-    }
-
 
 }

@@ -8,11 +8,11 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
 @Data
 @SQLDelete(sql = "UPDATE transaction SET deleted_at = now() WHERE transaction_id=?")
 @Table(name = "transaction")
 @Where(clause = "deleted_at IS NULL")
-@Entity
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +28,7 @@ public class Transaction {
 
     @Column(name = "payment_method")
     private String paymentMethod;
+
 
     @Column(name = "check_in", nullable = false)
     private LocalDateTime checkIn;
