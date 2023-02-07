@@ -2,7 +2,6 @@ package com.synergy.transaction.entity;
 
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -10,7 +9,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@SQLDelete(sql = "UPDATE transaction SET deleted_at = now() WHERE transaction_id=?")
 @Table(name = "transaction")
 @Where(clause = "deleted_at IS NULL")
 public class Transaction {
@@ -52,8 +50,4 @@ public class Transaction {
     @Column(name = "updated_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
     @CreationTimestamp
     private LocalDateTime updatedAt;
-
-    @Column(name = "deleted_at")
-    private LocalDateTime deletedAt;
-
 }
