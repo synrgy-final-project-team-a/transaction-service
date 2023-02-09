@@ -18,6 +18,8 @@ public interface TransactionService {
 
     Boolean cancelTransaction(Long transactionId);
 
+    boolean confirmTransaction(Long transactionId);
+
     ResponseEntity<Map<String, Object>> uploadProofOfPayment(
             Long transactionId, UploadProofOfPayment uploadSpoofOfPayment) throws IOException;
 

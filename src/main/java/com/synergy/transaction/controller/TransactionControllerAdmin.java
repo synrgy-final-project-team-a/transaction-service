@@ -1,16 +1,12 @@
 package com.synergy.transaction.controller;
 
-import com.synergy.transaction.entity.Booking;
-import com.synergy.transaction.entity.Transaction;
 import com.synergy.transaction.repository.BookingRepository;
-import com.synergy.transaction.repository.TransactionRepository;
 import com.synergy.transaction.service.impl.TransactionServiceImpl;
 import com.synergy.transaction.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,14 +27,14 @@ public class TransactionControllerAdmin {
     private BookingRepository bookingRepository;
 
     @GetMapping("/list")
-    public ResponseEntity<Map> getTransactionList(
-            @RequestParam(required = true) Integer page,
-            @RequestParam(required = true) Integer size) {
-        Pageable show_data = PageRequest.of(page, size);
-        Page<Map<String, Object>> list = null;
-        list = bookingRepository.getAllTransactionByAdmin(show_data);
+    public ResponseEntity<Map<String, Object>> getTransactionList(
+            @RequestParam() Integer page,
+            @RequestParam() Integer size) {
 
-        return new ResponseEntity<>(res.success(list, "success get list kost!", 200), HttpStatus.OK);
+        Pageable pagination = PageRequest.of(page, size);
+        Page<Map<String, Object>> transactionsListForAdmin = bookingRepository.getAllTransactionByAdmin(pagination);
+
+        return res.resSuccess(transactionsListForAdmin, "success", 200);
     }
 
     @GetMapping(value = "/{bookingId}")

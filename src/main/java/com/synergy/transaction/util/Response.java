@@ -45,12 +45,4 @@ public class Response {
         res.put("status", 404);
         return new ResponseEntity<>(res, HttpStatus.NOT_FOUND);
     }
-
-    public Map<String, Object> success(Object data, String message, Integer statusCode) {
-        Map<String, Object> res = new HashMap<>();
-        res.put("data", data);
-        res.put("message", message);
-        res.put("status_code", statusCode);
-        return res;
-    }
 }
