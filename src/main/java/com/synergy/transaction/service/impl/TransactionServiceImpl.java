@@ -158,7 +158,6 @@ public class TransactionServiceImpl implements TransactionService {
                 .plusDays(
                         BookingDuration.getDuration(
                                 price.get().getDurationType())));
-        transaction.setDeadlinePayment(booking.getCreatedAt().plusDays(1));
         transaction.setStatus(EStatus.POSTED.name());
 
         // save transaction detail
@@ -279,6 +278,24 @@ public class TransactionServiceImpl implements TransactionService {
         if (transaction.isPresent()) {
             transaction.get().setStatus(EStatus.CANCELLED.name());
             transaction.get().setDeadlinePayment(null);
+
+            // save updated data
+            transactionRepository.save(transaction.get());
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean confirmTransaction(Long transactionId) {
+        Optional<Transaction> transaction = transactionRepository.findByTransactionId(transactionId);
+
+        if (transaction.isPresent()) {
+            transaction.get().setStatus(EStatus.CONFIRMED.name());
+            transaction.get().setDeadlinePayment(
+                    LocalDateTime.now().plusDays(1)
+            );
 
             // save updated data
             transactionRepository.save(transaction.get());

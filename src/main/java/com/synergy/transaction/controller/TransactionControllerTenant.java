@@ -43,6 +43,22 @@ public class TransactionControllerTenant {
         }
     }
 
+    @PostMapping(value = "/confirm/{transactionId}")
+    public ResponseEntity<Map<String, Object>> confirmTransaction(@PathVariable("transactionId") Long transactionid) {
+        try {
+            boolean isConfirmed = transactionServiceImpl.confirmTransaction(transactionid);
+
+            if (!isConfirmed) {
+                return res.clientError("transaction doesn't exist");
+            }
+
+            return res.resSuccess(1, "success", 201);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return res.internalServerError(e.getMessage());
+        }
+    }
+
     @PostMapping(value = "/approve/{transactionId}")
     public ResponseEntity<Map<String, Object>> approveTransaction(@PathVariable("transactionId") Long transactionId) {
         try {
