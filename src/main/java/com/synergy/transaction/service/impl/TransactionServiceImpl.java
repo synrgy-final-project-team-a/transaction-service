@@ -136,6 +136,7 @@ public class TransactionServiceImpl implements TransactionService {
         booking.setGender(postBookingDto.getGender());
         booking.setJob(postBookingDto.getJob());
         booking.setPhoneNumber(postBookingDto.getPhone_number());
+        booking.setPrice(price.get());
 
         // attach user and room that relation each other in booking table
         booking.setProfile(user.get());
@@ -161,11 +162,12 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setStatus(EStatus.POSTED.name());
 
         // save transaction detail
-        transactionRepository.save(transaction);
+        Transaction transactionSaved = transactionRepository.save(transaction);
 
         Map<String, Object> formattedResponse = new HashMap<>();
 
         formattedResponse.put("bookingId", booking.getBookingId());
+        formattedResponse.put("transactionId", transactionSaved.getTransactionId());
         formattedResponse.put("bookingCode", booking.getBookingCode());
         formattedResponse.put("name", booking.getName());
         formattedResponse.put("gender", booking.getGender());
@@ -182,6 +184,11 @@ public class TransactionServiceImpl implements TransactionService {
         Optional<Transaction> transaction = transactionRepository.findByTransactionId(transactionId);
 
         if (transaction.isPresent()) {
+
+            if (!Objects.equals(transaction.get().getStatus(), EStatus.REVIEWED.name())) {
+                return false;
+            }
+
             transaction.get().setStatus(EStatus.APPROVED.name());
             transaction.get().setDeadlinePayment(null);
 
@@ -201,6 +208,10 @@ public class TransactionServiceImpl implements TransactionService {
 
         if (!transaction.isPresent()) {
             return res.notFoundError("transaction doesn't exist");
+        }
+
+        if (!Objects.equals(transaction.get().getStatus(), EStatus.CONFIRMED.name())) {
+            return res.clientError("transaction has not confirmed");
         }
 
         // upload image
@@ -275,7 +286,16 @@ public class TransactionServiceImpl implements TransactionService {
     public Boolean cancelTransaction(Long transactionId) {
         Optional<Transaction> transaction = transactionRepository.findByTransactionId(transactionId);
 
+        List<String> statusList = new ArrayList<>();
+        statusList.add(EStatus.POSTED.name());
+        statusList.add(EStatus.CONFIRMED.name());
+
+
         if (transaction.isPresent()) {
+            if (!statusList.contains(transaction.get().getStatus())) {
+                return false;
+            }
+
             transaction.get().setStatus(EStatus.CANCELLED.name());
             transaction.get().setDeadlinePayment(null);
 
@@ -292,6 +312,11 @@ public class TransactionServiceImpl implements TransactionService {
         Optional<Transaction> transaction = transactionRepository.findByTransactionId(transactionId);
 
         if (transaction.isPresent()) {
+
+            if (!Objects.equals(transaction.get().getStatus(), EStatus.POSTED.name())) {
+                return false;
+            }
+
             transaction.get().setStatus(EStatus.CONFIRMED.name());
             transaction.get().setDeadlinePayment(
                     LocalDateTime.now().plusDays(1)
