@@ -32,6 +32,10 @@ public class Booking {
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "price_id", nullable = false)
+    private Price price;
+
     @Column(name = "name")
     private String name;
 
