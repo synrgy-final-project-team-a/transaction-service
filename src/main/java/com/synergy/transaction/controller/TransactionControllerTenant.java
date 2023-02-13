@@ -1,5 +1,6 @@
 package com.synergy.transaction.controller;
 
+import com.synergy.transaction.repository.TransactionRepository;
 import com.synergy.transaction.service.impl.TransactionServiceImpl;
 import com.synergy.transaction.util.Response;
 import org.slf4j.Logger;
@@ -25,6 +26,8 @@ public class TransactionControllerTenant {
 
     @Autowired
     private Response res;
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     @GetMapping("/list/{profileId}")
     public ResponseEntity<Map<String, Object>> getTransactionListByIdSeeker(
@@ -34,8 +37,8 @@ public class TransactionControllerTenant {
 
         try {
             Pageable pagination = PageRequest.of(page, size);
+            transactionRepository.getWatchedSeeker(profileId);
             Page<Map<String, Object>> tenantTransactions = transactionServiceImpl.getTenantTransactions(profileId, pagination);
-
             return res.resSuccess(tenantTransactions, "success", 200);
         } catch (Exception e) {
             logger.error(e.getMessage());

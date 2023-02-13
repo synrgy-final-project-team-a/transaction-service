@@ -2,6 +2,9 @@ package com.synergy.transaction.controller;
 
 import com.synergy.transaction.dto.PostBookingDto;
 import com.synergy.transaction.dto.UploadProofOfPayment;
+import com.synergy.transaction.repository.BookingRepository;
+import com.synergy.transaction.repository.ProfileRepository;
+import com.synergy.transaction.repository.TransactionRepository;
 import com.synergy.transaction.service.impl.TransactionServiceImpl;
 import com.synergy.transaction.util.Response;
 import org.slf4j.Logger;
@@ -27,6 +30,12 @@ public class TransactionControllerSeeker {
 
     @Autowired
     private Response res;
+    @Autowired
+    private BookingRepository bookingRepository;
+    @Autowired
+    private TransactionRepository transactionRepository;
+    @Autowired
+    private ProfileRepository profileRepository;
 
     @GetMapping("/list/{profileId}")
     public ResponseEntity<Map<String, Object>> getTransactionListByIdSeeker(
@@ -36,6 +45,7 @@ public class TransactionControllerSeeker {
 
         try {
             Pageable pagination = PageRequest.of(page, size);
+            transactionRepository.getWatchedSeeker(profileId);
             Page<Map<String, Object>> seekerTransactions = transactionServiceImpl.getSeekerTransactions(profileId, pagination);
 
             return res.resSuccess(seekerTransactions, "success", 200);
@@ -49,7 +59,6 @@ public class TransactionControllerSeeker {
     public ResponseEntity<Map<String, Object>> cancelTransactionBySeeker(@PathVariable("transactionId") Long transactionId) {
         try {
             boolean deleteTransaction = transactionServiceImpl.cancelTransaction(transactionId);
-
             if (!deleteTransaction) {
                 return res.clientError("transaction doesn't exist");
             }
