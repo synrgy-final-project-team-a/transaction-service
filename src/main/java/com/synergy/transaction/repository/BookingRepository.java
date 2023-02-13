@@ -107,6 +107,9 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "k.kost_name,\n" +
             "b.booking_id,\n" +
             "b.booking_code,\n" +
+            "b.name,\n" +
+            "t.payment_method,\n" +
+            "b.phone_number,\n" +
             "k.address,\n" +
             "r.room_name,\n" +
             "k.city,\n" +
@@ -132,6 +135,9 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "k.kost_name,\n" +
             "b.booking_id,\n" +
             "b.booking_code,\n" +
+            "b.name,\n" +
+            "t.payment_method,\n" +
+            "b.phone_number,\n" +
             "k.address,\n" +
             "r.room_name,\n" +
             "k.city,\n" +

@@ -54,6 +54,9 @@ public class TransactionServiceImpl implements TransactionService {
             // Add field room
             itemBooking.put("booking_id", response.get("booking_id"));
             itemBooking.put("booking_code", response.get("booking_code"));
+            itemBooking.put("name", response.get("name"));
+            itemBooking.put("payment_method", response.get("payment_method"));
+            itemBooking.put("phone_number", response.get("phone_number"));
             itemBooking.put("kost_name", response.get("kost_name"));
             itemBooking.put("room_name", response.get("room_name"));
             itemBooking.put("address", response.get("address"));
@@ -107,19 +110,15 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public ResponseEntity<Map<String, Object>> bookKost(Long profileId, Long roomId, PostBookingDto postBookingDto) {
+    public ResponseEntity<Map<String, Object>> bookKost(Long profileId, Long priceId, PostBookingDto postBookingDto) {
 
         Optional<Profile> user = profileRepository.findById(profileId);
-        Optional<Room> room = roomRepository.findById(roomId);
-        Optional<Price> price = priceRepository.findById(postBookingDto.getPrice_id());
+        Optional<Price> price = priceRepository.findById(priceId);
 
         if (!user.isPresent()) {
             return res.notFoundError("user doesn't exist");
         }
 
-        if (!room.isPresent()) {
-            return res.notFoundError("room doesn't exist");
-        }
 
         if (!price.isPresent()) {
             return res.notFoundError("price doesn't exist for this room");
@@ -140,7 +139,7 @@ public class TransactionServiceImpl implements TransactionService {
 
         // attach user and room that relation each other in booking table
         booking.setProfile(user.get());
-        booking.setRoom(room.get());
+
 
         // save booking detail
         bookingRepository.save(booking);
@@ -174,7 +173,7 @@ public class TransactionServiceImpl implements TransactionService {
         formattedResponse.put("job", booking.getJob());
         formattedResponse.put("phoneNumber", booking.getPhoneNumber());
         formattedResponse.put("profileId", booking.getProfile().getId());
-        formattedResponse.put("roomId", booking.getRoom().getId());
+        formattedResponse.put("priceId", booking.getPrice().getId());
 
         return res.resSuccess(formattedResponse, "success", 200);
     }
@@ -244,7 +243,6 @@ public class TransactionServiceImpl implements TransactionService {
     public ResponseEntity<Map<String, Object>> getTransactionHistoryByIdBookingAdmin(Long bookingId) {
         List<Map<String, Object>> data = bookingRepository.getTransactionByIdAdmin(bookingId);
         return getMapResponseBooking(data);
-
     }
 
     @Override

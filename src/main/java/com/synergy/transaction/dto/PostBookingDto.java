@@ -32,6 +32,4 @@ public class PostBookingDto {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime check_in;
 
-    @NotNull
-    private Long price_id;
 }

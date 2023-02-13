@@ -60,14 +60,14 @@ public class TransactionControllerSeeker {
         }
     }
 
-    @PostMapping(value = "/user/{profileId}/room/{roomId}")
+    @PostMapping(value = "/user/{profileId}/price/{priceId}")
     public ResponseEntity<Map<String, Object>> createBookingRoom(
             @PathVariable("profileId") Long profileId,
-            @PathVariable("roomId") Long roomId,
+            @PathVariable("priceId") Long priceId,
             @ModelAttribute @Valid PostBookingDto postBookingDto
     ) {
         try {
-            return transactionServiceImpl.bookKost(profileId, roomId, postBookingDto);
+            return transactionServiceImpl.bookKost(profileId, priceId, postBookingDto);
         } catch (Exception e) {
             logger.error(e.getMessage());
             return res.internalServerError(e.getMessage());
