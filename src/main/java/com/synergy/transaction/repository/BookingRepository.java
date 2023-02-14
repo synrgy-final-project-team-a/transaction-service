@@ -157,7 +157,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "JOIN room r on p.room_id  = r.room_id\n" +
             "JOIN kost k on k.kost_id = r.kost_id \n" +
             "JOIN profile pro on pro.id = k.profile_id \n" +
-            "WHERE b.booking_id = :booking_id \n" +
-            "AND t.deleted_at is null \n")
+            "WHERE b.booking_id = :booking_id\n")
     List<Map<String, Object>> getTransactionByIdAdmin(@Param(value = "booking_id") Long bookingId);
 }
