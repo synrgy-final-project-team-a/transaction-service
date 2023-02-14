@@ -40,7 +40,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "t.status,\n" +
             "t.deadline_payment,\n" +
             "t.watched_sk,\n" +
-            "t.watched_tn,\n" +
+            "t.watched_tn\n" +
             "FROM booking b \n" +
             "JOIN transaction t on t.booking_id = b.booking_id \n" +
             "JOIN price p on p.price_id = b.price_id\n" +
