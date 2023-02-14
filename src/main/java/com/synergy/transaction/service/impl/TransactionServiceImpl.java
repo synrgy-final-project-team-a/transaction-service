@@ -212,7 +212,7 @@ public class TransactionServiceImpl implements TransactionService {
     public ResponseEntity<Map<String, Object>> uploadProofOfPayment(
             Long transactionId,
             UploadProofOfPayment uploadProofOfPayment) throws IOException {
-        Optional<Transaction> transaction = transactionRepository.findById(transactionId);
+        Optional<Transaction> transaction = transactionRepository.findByTransactionId(transactionId);
 
         if (!transaction.isPresent()) {
             return res.notFoundError("transaction doesn't exist");
