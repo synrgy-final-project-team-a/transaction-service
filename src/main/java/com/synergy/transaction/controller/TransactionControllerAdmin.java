@@ -1,5 +1,6 @@
 package com.synergy.transaction.controller;
 
+import com.synergy.transaction.repository.TransactionRepository;
 import com.synergy.transaction.repository.BookingRepository;
 import com.synergy.transaction.service.impl.TransactionServiceImpl;
 import com.synergy.transaction.util.Response;
@@ -26,8 +27,8 @@ public class TransactionControllerAdmin {
     @Autowired
     private BookingRepository bookingRepository;
     
-    // @Autowired
-    // private TransactionRepository transactionRepository;
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     @GetMapping("/list")
     public ResponseEntity<Map<String, Object>> getTransactionList(
@@ -45,7 +46,7 @@ public class TransactionControllerAdmin {
             @PathVariable("bookingId") Long bookingId
     ) {
         try {
-            // transactionRepository.getWatchedTennant(bookingId);
+            transactionRepository.getWatchedTennant(bookingId);
             return transactionServiceImpl.getTransactionHistoryByIdBookingAdmin(bookingId);
         } catch (Exception e) {
             return res.internalServerError(e.getMessage());
