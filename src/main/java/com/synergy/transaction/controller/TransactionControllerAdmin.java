@@ -45,7 +45,7 @@ public class TransactionControllerAdmin {
             @PathVariable("bookingId") Long bookingId
     ) {
         try {
-            transactionRepository.getWatchedTennant(bookingId);
+            // transactionRepository.getWatchedTennant(bookingId);
             return transactionServiceImpl.getTransactionHistoryByIdBookingAdmin(bookingId);
         } catch (Exception e) {
             return res.internalServerError(e.getMessage());
