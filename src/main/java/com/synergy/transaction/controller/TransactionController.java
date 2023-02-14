@@ -31,7 +31,6 @@ public class TransactionController {
             @PathVariable("bookingId") Long bookingId
     ) {
         try {
-            ResponseEntity<Map<String, Object>> data = transactionServiceImpl.getTransactionHistoryByIdBooking(bookingId);
             ResponseEntity<Map<String, Object>> data1 = transactionServiceImpl.getTransactionHistoryByIdBooking(bookingId);
             return data1;
 

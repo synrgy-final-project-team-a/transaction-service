@@ -34,7 +34,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
             (value = "UPDATE\n" +
                     "  transaction\n" +
                     "SET\n" +
-                    "  watched = true\n" +
+                    "  watched_sk = true\n" +
                     "FROM\n" +
                     "  booking\n" +
                     "WHERE\n" +
@@ -42,13 +42,27 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
                     "  AND booking.profile_id = :profileId", nativeQuery = true)
     void getWatchedSeeker(Long profileId);
 
+//    @Transactional
+//    @Modifying
+//    @Query
+//            (value = "UPDATE\n" +
+//                    "  transaction\n" +
+//                    "SET\n" +
+//                    "  watched_tn = true\n" +
+//                    "FROM\n" +
+//                    "  booking\n" +
+//                    "WHERE\n" +
+//                    "  booking.booking_id = transaction.booking_id\n" +
+//                    "  AND booking.booking_id = :bookingId", nativeQuery = true)
+//    void getWatchedTennant(Long bookingId);
+
     @Transactional
     @Modifying
     @Query
             (value = "UPDATE\n" +
                     "  transaction t\n" +
                     "SET\n" +
-                    "  watched = true\n" +
+                    "  watched_tn = true\n" +
                     "FROM\n" +
                     "  kost k,\n" +
                     "  room r,\n" +

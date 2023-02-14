@@ -39,7 +39,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "t.transaction_id,\n" +
             "t.status,\n" +
             "t.deadline_payment\n" +
-            "t.watched,\n" +
+            "t.watched_sk,\n" +
+            "t.watched_tn,\n" +
             "FROM booking b \n" +
             "JOIN transaction t on t.booking_id = b.booking_id \n" +
             "JOIN price p on p.price_id = b.price_id\n" +
@@ -53,7 +54,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     @Query(nativeQuery = true, value = "SELECT \n" +
             "t.transaction_id,\n" +
-            "t.watched,\n" +
+            "t.watched_sk,\n" +
+            "t.watched_tn,\n" +
             "k.kost_name,\n" +
             "b.booking_id,\n" +
             "b.booking_code,\n" +

@@ -43,8 +43,10 @@ public class Transaction {
     @Column(name = "status", nullable = false)
     private String status;
 
-    @Column(name = "watched")
-    private Boolean watched;
+    @Column(name = "watched_tn")
+    private Boolean watchedTn;
+    @Column(name = "watched_sk")
+    private Boolean watchedSk;
 
     @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
     @CreationTimestamp

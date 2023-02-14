@@ -100,7 +100,8 @@ public class TransactionServiceImpl implements TransactionService {
 
                         transactionData.get().setDeadlinePayment(null);
                         transactionData.get().setStatus(EStatus.CANCELLED.name());
-                        transactionData.get().setWatched(false);
+                        transactionData.get().setWatchedTn(false);
+                        transactionData.get().setWatchedSk(false);
 
                         transactionRepository.save(transactionData.get());
                     }
@@ -163,7 +164,9 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setStatus(EStatus.POSTED.name());
 
         //        instert watched is false
-        transaction.setWatched(false);
+        transaction.setWatchedTn(false);
+        transaction.setWatchedSk(false);
+
         // save transaction detail
         Transaction transactionSaved = transactionRepository.save(transaction);
 
@@ -193,7 +196,8 @@ public class TransactionServiceImpl implements TransactionService {
             }
 
             transaction.get().setStatus(EStatus.APPROVED.name());
-            transaction.get().setWatched(false);
+            transaction.get().setWatchedTn(false);
+            transaction.get().setWatchedSk(false);
             transaction.get().setDeadlinePayment(null);
 
             // save updated data
@@ -225,7 +229,8 @@ public class TransactionServiceImpl implements TransactionService {
 
         transaction.get().setProofOfPayment(image);
         transaction.get().setStatus(EStatus.REVIEWED.name());
-        transaction.get().setWatched(false);
+        transaction.get().setWatchedTn(false);
+        transaction.get().setWatchedSk(false);
 
         // save updated data
         transactionRepository.save(transaction.get());
@@ -275,7 +280,8 @@ public class TransactionServiceImpl implements TransactionService {
 
         if (transaction.isPresent()) {
             transaction.get().setStatus(EStatus.REJECTED.name());
-            transaction.get().setWatched(false);
+            transaction.get().setWatchedTn(false);
+            transaction.get().setWatchedSk(false);
             transaction.get().setDeadlinePayment(null);
 
             // save updated data
@@ -302,7 +308,8 @@ public class TransactionServiceImpl implements TransactionService {
             }
 
             transaction.get().setStatus(EStatus.CANCELLED.name());
-            transaction.get().setWatched(false);
+            transaction.get().setWatchedTn(false);
+            transaction.get().setWatchedSk(false);
             transaction.get().setDeadlinePayment(null);
 
             // save updated data
@@ -324,7 +331,8 @@ public class TransactionServiceImpl implements TransactionService {
             }
 
             transaction.get().setStatus(EStatus.CONFIRMED.name());
-            transaction.get().setWatched(false);
+            transaction.get().setWatchedTn(false);
+            transaction.get().setWatchedSk(false);
             transaction.get().setDeadlinePayment(
                     LocalDateTime.now().plusDays(1)
             );

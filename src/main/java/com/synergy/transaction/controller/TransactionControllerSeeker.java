@@ -45,8 +45,8 @@ public class TransactionControllerSeeker {
 
         try {
             Pageable pagination = PageRequest.of(page, size);
-            transactionRepository.getWatchedSeeker(profileId);
             Page<Map<String, Object>> seekerTransactions = transactionServiceImpl.getSeekerTransactions(profileId, pagination);
+            transactionRepository.getWatchedSeeker(profileId);
 
             return res.resSuccess(seekerTransactions, "success", 200);
         } catch (Exception e) {
