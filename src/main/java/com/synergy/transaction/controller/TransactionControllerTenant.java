@@ -37,7 +37,7 @@ public class TransactionControllerTenant {
 
         try {
             Pageable pagination = PageRequest.of(page, size);
-            transactionRepository.getWatchedTennant(profileId);
+            // transactionRepository.getWatchedTennant(profileId);
             Page<Map<String, Object>> tenantTransactions = transactionServiceImpl.getTenantTransactions(profileId, pagination);
             return res.resSuccess(tenantTransactions, "success", 200);
         } catch (Exception e) {
