@@ -19,7 +19,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "k.kost_name,\n" +
             "b.booking_id,\n" +
             "b.booking_code,\n" +
-            "b.check_in,\n" +
+            "t.check_in,\n" +
+            "t.check_out,\n" +
             "k.front_building_photo,\n" +
             "k.address,\n" +
             "k.city,\n" +
@@ -142,7 +143,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "b.booking_code,\n" +
             "b.name,\n" +
             "b.phone_number,\n" +
-            "b.check_in,\n" +
+            "t.check_in,\n" +
+            "t.check_out,\n" +
             "k.front_building_photo,\n" +
             "k.address,\n" +
             "r.room_name,\n" +
