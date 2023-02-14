@@ -57,14 +57,20 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     Page<Map<String, Object>> getListTransactionIdOfTenant(@Param(value = "profile_id") Long profileId, Pageable pageable);
 
     @Query(nativeQuery = true, value = "SELECT \n" +
+            "r.room_name,\n" +
             "t.transaction_id,\n" +
             "t.watched_sk,\n" +
+            "t.check_in,\n" +
+            "t.check_out,\n" +
             "k.kost_name,\n" +
+            "b.phone_number,\n" +
+            "b.name,\n" +
             "b.booking_id,\n" +
             "b.booking_code,\n" +
             "k.address,\n" +
             "k.city,\n" +
             "k.province,\n" +
+            "p.duration_type,\n" +
             "p.price,\n" +
             "t.status,\n" +
             "t.deadline_payment\n" +
