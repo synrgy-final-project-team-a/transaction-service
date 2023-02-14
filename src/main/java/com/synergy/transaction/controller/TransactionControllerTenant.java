@@ -30,7 +30,7 @@ public class TransactionControllerTenant {
     private TransactionRepository transactionRepository;
 
     @GetMapping("/list/{profileId}")
-    public ResponseEntity<Map<String, Object>> getTransactionListByIdTennant(
+    public ResponseEntity<Map<String, Object>> getTransactionListByIdSeeker(
             @PathVariable Long profileId,
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "10") Integer size) {

@@ -38,7 +38,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Query(nativeQuery = true, value = "SELECT \n" +
             "t.transaction_id,\n" +
             "t.status,\n" +
-            "t.deadline_payment\n" +
+            "t.deadline_payment,\n" +
             "t.watched_sk,\n" +
             "t.watched_tn,\n" +
             "FROM booking b \n" +
