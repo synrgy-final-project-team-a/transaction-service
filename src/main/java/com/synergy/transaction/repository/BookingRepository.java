@@ -59,6 +59,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Query(nativeQuery = true, value = "SELECT \n" +
             "r.room_name,\n" +
             "t.transaction_id,\n" +
+            "t.updated_at,\n" +
             "t.watched_sk,\n" +
             "t.check_in,\n" +
             "t.check_out,\n" +
