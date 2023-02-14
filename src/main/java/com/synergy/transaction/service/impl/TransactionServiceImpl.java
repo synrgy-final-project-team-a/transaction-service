@@ -71,6 +71,7 @@ public class TransactionServiceImpl implements TransactionService {
             itemBooking.put("status", response.get("status"));
             itemBooking.put("date_payment", response.get("updated_at"));
             itemBooking.put("payment_method", response.get("payment_method"));
+            itemBooking.put("proof_of_payment", response.get("proof_of_payment"));
             itemBooking.put("profile_id", response.get("id"));
             itemBooking.put("bank_name", response.get("bank_name"));
 
