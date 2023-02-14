@@ -53,6 +53,7 @@ public class TransactionServiceImpl implements TransactionService {
             Map<String, Object> itemBooking = new HashMap<>();
             // Add field room
             itemBooking.put("booking_id", response.get("booking_id"));
+            itemBooking.put("transaction_id", response.get("transaction_id"));
             itemBooking.put("booking_code", response.get("booking_code"));
             itemBooking.put("name", response.get("name"));
             itemBooking.put("payment_method", response.get("payment_method"));

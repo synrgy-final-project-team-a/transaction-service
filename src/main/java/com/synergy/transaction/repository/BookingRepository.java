@@ -160,6 +160,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "t.status,\n" +
             "t.payment_method,\n" +
             "p.duration_type,\n" +
+            "t.transaction_id,\n" +
             "t.updated_at,\n" +
             "pro.id,\n" +
             "pro.bank_name \n" +
