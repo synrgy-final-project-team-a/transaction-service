@@ -21,7 +21,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
                     "SET\n" +
                     "  watched_sk = true\n" +
                     "WHERE\n" +
-                    "  AND booking_id = :bookingId", nativeQuery = true)
+                    "  booking_id = :bookingId", nativeQuery = true)
     void getWatchedSeeker(Long bookingId);
 
     @Transactional
@@ -32,7 +32,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
                     "SET\n" +
                     "  watched_tn = true\n" +
                     "WHERE\n" +
-                    "  AND booking_id = :bookingId", nativeQuery = true)
+                    "  booking_id = :bookingId", nativeQuery = true)
     void getWatchedTennant(Long bookingId);
 
 
