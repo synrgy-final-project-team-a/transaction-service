@@ -26,8 +26,8 @@ public class TransactionControllerAdmin {
     @Autowired
     private BookingRepository bookingRepository;
     
-    @Autowired
-    private TransactionRepository transactionRepository;
+    // @Autowired
+    // private TransactionRepository transactionRepository;
 
     @GetMapping("/list")
     public ResponseEntity<Map<String, Object>> getTransactionList(
