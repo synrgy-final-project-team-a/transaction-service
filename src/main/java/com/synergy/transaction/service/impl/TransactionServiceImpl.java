@@ -57,7 +57,10 @@ public class TransactionServiceImpl implements TransactionService {
             itemBooking.put("name", response.get("name"));
             itemBooking.put("payment_method", response.get("payment_method"));
             itemBooking.put("phone_number", response.get("phone_number"));
+            itemBooking.put("front_building_photo", response.get("front_building_photo"));
             itemBooking.put("kost_name", response.get("kost_name"));
+            itemBooking.put("check_in", response.get("check_in"));
+            itemBooking.put("check_out", response.get("check_out"));
             itemBooking.put("room_name", response.get("room_name"));
             itemBooking.put("address", response.get("address"));
             itemBooking.put("city", response.get("city"));
