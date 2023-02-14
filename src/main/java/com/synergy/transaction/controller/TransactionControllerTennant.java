@@ -17,9 +17,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("/tennant/transactions")
 @CrossOrigin("*")
-public class TransactionControllerTenant {
+public class TransactionControllerTennant {
 
-    private final Logger logger = LoggerFactory.getLogger(TransactionControllerTenant.class);
+    private final Logger logger = LoggerFactory.getLogger(TransactionControllerTennant.class);
 
     @Autowired
     private TransactionServiceImpl transactionServiceImpl;
@@ -30,7 +30,7 @@ public class TransactionControllerTenant {
     private TransactionRepository transactionRepository;
 
     @GetMapping("/list/{profileId}")
-    public ResponseEntity<Map<String, Object>> getTransactionListByIdSeeker(
+    public ResponseEntity<Map<String, Object>> getTransactionListByIdTennant(
             @PathVariable Long profileId,
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "10") Integer size) {
