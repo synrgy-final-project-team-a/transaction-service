@@ -15,6 +15,7 @@ import java.util.Map;
 public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Query(nativeQuery = true, value = "SELECT \n" +
             "t.transaction_id,\n" +
+            "t.watched_tn,\n" +
             "k.kost_name,\n" +
             "b.booking_id,\n" +
             "b.booking_code,\n" +
@@ -23,7 +24,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "k.province,\n" +
             "p.price,\n" +
             "t.status,\n" +
-            "t.watched_tn,\n" +
             "t.deadline_payment\n" +
             "FROM booking b \n" +
             "JOIN transaction t on t.booking_id = b.booking_id \n" +
@@ -56,7 +56,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Query(nativeQuery = true, value = "SELECT \n" +
             "t.transaction_id,\n" +
             "t.watched_sk,\n" +
-            "t.watched_tn,\n" +
             "k.kost_name,\n" +
             "b.booking_id,\n" +
             "b.booking_code,\n" +
