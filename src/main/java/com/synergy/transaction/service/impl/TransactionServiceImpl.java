@@ -229,6 +229,7 @@ public class TransactionServiceImpl implements TransactionService {
 
         transaction.get().setProofOfPayment(image);
         transaction.get().setStatus(EStatus.REVIEWED.name());
+        transaction.get().setDeadlinePayment(null);
         transaction.get().setWatchedTn(false);
         transaction.get().setWatchedSk(false);
 
