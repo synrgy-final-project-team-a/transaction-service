@@ -133,7 +133,9 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "p.duration_type,\n" +
             "t.updated_at,\n" +
             "pro.id,\n" +
-            "pro.bank_name \n" +
+            "pro.bank_name, \n" +
+            "pro.bank_account, \n" +
+            "pro.bank_username \n" +
             "FROM booking b \n" +
             "JOIN transaction t on t.booking_id = b.booking_id \n" +
             "JOIN price p on p.price_id = b.price_id\n" +
@@ -165,7 +167,9 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "t.transaction_id,\n" +
             "t.updated_at,\n" +
             "pro.id,\n" +
-            "pro.bank_name \n" +
+            "pro.bank_name, \n" +
+            "pro.bank_account, \n" +
+            "pro.bank_username \n" +
             "FROM booking b \n" +
             "JOIN transaction t on t.booking_id = b.booking_id \n" +
             "JOIN price p on p.price_id = b.price_id\n" +
