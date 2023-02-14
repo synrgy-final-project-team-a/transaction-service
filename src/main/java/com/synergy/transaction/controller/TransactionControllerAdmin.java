@@ -25,6 +25,9 @@ public class TransactionControllerAdmin {
 
     @Autowired
     private BookingRepository bookingRepository;
+    
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     @GetMapping("/list")
     public ResponseEntity<Map<String, Object>> getTransactionList(
@@ -39,10 +42,11 @@ public class TransactionControllerAdmin {
 
     @GetMapping(value = "/{bookingId}")
     public ResponseEntity<Map<String, Object>> getByBookingId(
-            @PathVariable("bookingId") Long profileId
+            @PathVariable("bookingId") Long bookingId
     ) {
         try {
-            return transactionServiceImpl.getTransactionHistoryByIdBookingAdmin(profileId);
+            transactionRepository.getWatchedTennant(bookingId);
+            return transactionServiceImpl.getTransactionHistoryByIdBookingAdmin(bookingId);
         } catch (Exception e) {
             return res.internalServerError(e.getMessage());
         }

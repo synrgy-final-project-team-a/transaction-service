@@ -32,6 +32,7 @@ public class TransactionController {
     ) {
         try {
             ResponseEntity<Map<String, Object>> data1 = transactionServiceImpl.getTransactionHistoryByIdBooking(bookingId);
+            transactionRepository.getWatchedSeeker(bookingId);
             return data1;
 
         } catch (Exception e) {
