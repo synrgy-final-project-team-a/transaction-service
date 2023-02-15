@@ -369,7 +369,7 @@ public class TransactionServiceImpl implements TransactionService {
         Map<String, Object> parameters33 = new HashMap<>();
         parameters33.put("idTransaction", transactionId);
 
-        String pathUrl = "./report/Blank_A4.jrxml";
+        String pathUrl = "./report/invoice_kostku.jrxml";
         byte[] bytes = reportService.generate_pdf(parameters33, pathUrl);
 //        convert byte[] to file
         MultipartFile multipartFile = new MultipartFile() {

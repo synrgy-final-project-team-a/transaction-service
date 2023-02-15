@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ee4fddce-e895-40cd-ae28-043502a6c4b3">
-	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="invoice_kostku" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f8364875-e815-4680-9d73-49d81301a936">
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="483"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="506"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.jrdax"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="idTransaction" class="java.lang.Long"/>
-	<queryString language="SQL">
+	<queryString>
 		<![CDATA[select *
 from transaction t 
 join booking b on t.booking_id = b.booking_id 
@@ -462,36 +464,170 @@ where t.transaction_id = $P{idTransaction}]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="120" splitType="Stretch"/>
+		<band height="175" splitType="Stretch">
+			<textField>
+				<reportElement x="300" y="0" width="275" height="40" uuid="1f2bd35d-4e00-4c1c-b5b2-853a07c21782"/>
+				<textElement>
+					<font size="16" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["No. Invoice : " + $F{invoice_code}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="0" width="90" height="78" uuid="41f2ab2a-3b41-4709-b41d-f39f122e24a7"/>
+				<imageExpression><![CDATA["https://res.cloudinary.com/dqzsqzrkx/image/upload/v1676467001/logo-square_w1iaih.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="10" y="60" width="125" height="30" uuid="d72d2be1-1fe0-4ba7-80c1-0c419d5d6ff2"/>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kosanku Ltd.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="150" width="410" height="20" uuid="af7bea78-bc72-435c-8e69-2738356792a0"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Phone : (021) 80629666    |   Email : admin@kosanku.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="100" width="430" height="50" uuid="941643ad-5283-4b10-80e5-a6110fdec110"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Menara Standard Chartered, Jl. Prof. DR. Satrio No.164, RT.3/RW.4, Karet Semanggi, Kecamatan Setiabudi, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12930]]></text>
+			</staticText>
+		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="11" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="95" splitType="Stretch">
-			<staticText>
-				<reportElement x="80" y="65" width="110" height="30" uuid="c9c8656c-0398-4a43-b584-5b7a41d7eeca"/>
-				<text><![CDATA[Nama]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="200" y="65" width="140" height="30" uuid="239201cb-629f-4767-8136-e4de75aab05d"/>
-				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
-			</textField>
-		</band>
+		<band height="7" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch">
+		<band height="476" splitType="Stretch">
 			<textField>
-				<reportElement x="240" y="29" width="100" height="30" uuid="f2e9941d-855a-441d-9ce9-b1778ba3e082"/>
-				<textFieldExpression><![CDATA[$F{check_in}]]></textFieldExpression>
+				<reportElement x="10" y="124" width="499" height="30" uuid="7a903320-de0c-4197-bed0-d7c857c35d9f"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Check in 			: " + $F{check_in}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="154" width="500" height="30" uuid="b46c499b-a1aa-4fec-96d0-ebf8dc5c815c"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Check out 			: " + $F{check_out}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="30" width="500" height="30" uuid="65b2edf0-0473-4dd1-b1ba-f2b4abb30e32"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nama kost 			: " + $F{kost_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="184" width="160" height="30" uuid="78b843df-9002-4c39-a3df-ec26aecc5fe4"/>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Seeker Detail]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="0" width="200" height="30" uuid="6fb30996-9050-46ba-b9ed-5c2bcdb6fda4">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kost Detail]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="214" width="499" height="30" uuid="d2451c49-7ba4-41dd-a4d3-9dc41245f58c"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nama 			: " + $F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="244" width="500" height="30" uuid="502cc377-8023-46f8-846d-025e37a94f00"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["No Handphone 		: " + $F{phone_number}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="274" width="170" height="35" uuid="e6c4c995-31a4-434f-8372-9602890faba4"/>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Payment Detail]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="310" width="500" height="29" uuid="8404ba77-51fe-4c11-8263-f19154de1818"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Metode Pembayaran 	: " + $F{payment_method}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="339" width="499" height="29" uuid="e6b7db53-21c9-44a4-8867-108d173cbaaf"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Harga Kost 			: Rp " + $F{price}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="60" width="500" height="30" uuid="87f48e03-b8b6-494e-b4aa-f8690f78831c"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Namar Kamar 		: " + $F{room_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="90" width="496" height="30" uuid="6f3215e0-3459-4504-9a71-e380584b7a45"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Alamat 			: " + $F{address} + ","+ $F{city} + "," + $F{province}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="372" width="341" height="41" uuid="b898ff5b-a318-4edb-9a58-10152a301355"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Biaya Aplikasi 		: Rp 10000.00"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="8" y="420" width="260" height="1" uuid="ae1982ae-03ff-4664-b7a1-26c1a05605d7">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<textField>
+				<reportElement x="10" y="445" width="420" height="31" uuid="6c4704f3-8de4-402e-bb3d-731bb9190d73"/>
+				<textElement>
+					<font size="14" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total Harga 			: Rp " + SUM($F{price},10000)]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="41" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="280" y="0" width="380" height="30" uuid="269f684a-0677-4fbf-ae95-e279d6bc4a52"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Kode Booking : " + $F{booking_code}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
 		<band height="42" splitType="Stretch"/>
