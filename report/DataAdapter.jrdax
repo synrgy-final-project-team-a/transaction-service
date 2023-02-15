@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jdbcDataAdapter class="net.sf.jasperreports.data.jdbc.JdbcDataAdapterImpl">
+  <name>database</name>
+  <driver>org.postgresql.Driver</driver>
+  <username>postgres</username>
+  <password>DEwAbsIqpZ89V6dL2ZXs</password>
+  <url>jdbc:postgresql://containers-us-west-98.railway.app:7154/railway</url>
+  <database></database>
+  <savePassword>true</savePassword>
+  <serverAddress></serverAddress>
+</jdbcDataAdapter>

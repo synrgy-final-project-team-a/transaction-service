@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ee4fddce-e895-40cd-ae28-043502a6c4b3">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.jrdax"/>
+	<parameter name="idTransaction" class="java.lang.Long"/>
+	<queryString language="SQL">
+		<![CDATA[select *
+from transaction t 
+join booking b on t.booking_id = b.booking_id 
+join price p on p.price_id = b.price_id 
+join room r on r.room_id = p.room_id 
+join kost k on k.kost_id = r.kost_id 
+where t.transaction_id = $P{idTransaction}]]>
+	</queryString>
+	<field name="transaction_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="transaction_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="transaction_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="transaction"/>
+	</field>
+	<field name="check_in" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="check_in"/>
+		<property name="com.jaspersoft.studio.field.label" value="check_in"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="transaction"/>
+	</field>
+	<field name="check_out" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="check_out"/>
+		<property name="com.jaspersoft.studio.field.label" value="check_out"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="transaction"/>
+	</field>
+	<field name="created_at" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="created_at"/>
+		<property name="com.jaspersoft.studio.field.label" value="created_at"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="transaction"/>
+	</field>
+	<field name="deadline_payment" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="deadline_payment"/>
+		<property name="com.jaspersoft.studio.field.label" value="deadline_payment"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="transaction"/>
+	</field>
+	<field name="deleted_at" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="deleted_at"/>
+		<property name="com.jaspersoft.studio.field.label" value="deleted_at"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="transaction"/>
+	</field>
+	<field name="invoice_code" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="invoice_code"/>
+		<property name="com.jaspersoft.studio.field.label" value="invoice_code"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="transaction"/>
+	</field>
+	<field name="payment_method" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="payment_method"/>
+		<property name="com.jaspersoft.studio.field.label" value="payment_method"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="transaction"/>
+	</field>
+	<field name="updated_at" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="updated_at"/>
+		<property name="com.jaspersoft.studio.field.label" value="updated_at"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="transaction"/>
+	</field>
+	<field name="status" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="status"/>
+		<property name="com.jaspersoft.studio.field.label" value="status"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="transaction"/>
+	</field>
+	<field name="proof_of_payment" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="proof_of_payment"/>
+		<property name="com.jaspersoft.studio.field.label" value="proof_of_payment"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="transaction"/>
+	</field>
+	<field name="booking_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="booking_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="booking_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="transaction"/>
+	</field>
+	<field name="watched" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="watched"/>
+		<property name="com.jaspersoft.studio.field.label" value="watched"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="transaction"/>
+	</field>
+	<field name="watched_sk" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="watched_sk"/>
+		<property name="com.jaspersoft.studio.field.label" value="watched_sk"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="transaction"/>
+	</field>
+	<field name="watched_tn" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="watched_tn"/>
+		<property name="com.jaspersoft.studio.field.label" value="watched_tn"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="transaction"/>
+	</field>
+	<field name="COLUMN_16" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="booking_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="booking_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="booking"/>
+	</field>
+	<field name="booking_code" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="booking_code"/>
+		<property name="com.jaspersoft.studio.field.label" value="booking_code"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="booking"/>
+	</field>
+	<field name="COLUMN_18" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="created_at"/>
+		<property name="com.jaspersoft.studio.field.label" value="created_at"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="booking"/>
+	</field>
+	<field name="COLUMN_19" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="deleted_at"/>
+		<property name="com.jaspersoft.studio.field.label" value="deleted_at"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="booking"/>
+	</field>
+	<field name="gender" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="gender"/>
+		<property name="com.jaspersoft.studio.field.label" value="gender"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="booking"/>
+	</field>
+	<field name="name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="name"/>
+		<property name="com.jaspersoft.studio.field.label" value="name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="booking"/>
+	</field>
+	<field name="phone_number" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="phone_number"/>
+		<property name="com.jaspersoft.studio.field.label" value="phone_number"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="booking"/>
+	</field>
+	<field name="COLUMN_23" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="updated_at"/>
+		<property name="com.jaspersoft.studio.field.label" value="updated_at"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="booking"/>
+	</field>
+	<field name="profile_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="profile_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="profile_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="booking"/>
+	</field>
+	<field name="job" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="job"/>
+		<property name="com.jaspersoft.studio.field.label" value="job"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="booking"/>
+	</field>
+	<field name="price_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="price_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="price_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="booking"/>
+	</field>
+	<field name="COLUMN_27" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="price_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="price_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="price"/>
+	</field>
+	<field name="COLUMN_28" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="created_at"/>
+		<property name="com.jaspersoft.studio.field.label" value="created_at"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="price"/>
+	</field>
+	<field name="COLUMN_29" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="deleted_at"/>
+		<property name="com.jaspersoft.studio.field.label" value="deleted_at"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="price"/>
+	</field>
+	<field name="duration_type" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="duration_type"/>
+		<property name="com.jaspersoft.studio.field.label" value="duration_type"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="price"/>
+	</field>
+	<field name="price" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="price"/>
+		<property name="com.jaspersoft.studio.field.label" value="price"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="price"/>
+	</field>
+	<field name="COLUMN_32" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="updated_at"/>
+		<property name="com.jaspersoft.studio.field.label" value="updated_at"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="price"/>
+	</field>
+	<field name="room_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="room_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="room_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="price"/>
+	</field>
+	<field name="COLUMN_34" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="room_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="room_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="room"/>
+	</field>
+	<field name="available_room" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="available_room"/>
+		<property name="com.jaspersoft.studio.field.label" value="available_room"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="room"/>
+	</field>
+	<field name="COLUMN_36" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="created_at"/>
+		<property name="com.jaspersoft.studio.field.label" value="created_at"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="room"/>
+	</field>
+	<field name="COLUMN_37" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="deleted_at"/>
+		<property name="com.jaspersoft.studio.field.label" value="deleted_at"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="room"/>
+	</field>
+	<field name="inside_room_photo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="inside_room_photo"/>
+		<property name="com.jaspersoft.studio.field.label" value="inside_room_photo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="room"/>
+	</field>
+	<field name="other_room_photo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="other_room_photo"/>
+		<property name="com.jaspersoft.studio.field.label" value="other_room_photo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="room"/>
+	</field>
+	<field name="quantity_room" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="quantity_room"/>
+		<property name="com.jaspersoft.studio.field.label" value="quantity_room"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="room"/>
+	</field>
+	<field name="size_room" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="size_room"/>
+		<property name="com.jaspersoft.studio.field.label" value="size_room"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="room"/>
+	</field>
+	<field name="COLUMN_42" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="updated_at"/>
+		<property name="com.jaspersoft.studio.field.label" value="updated_at"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="room"/>
+	</field>
+	<field name="facility_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="facility_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="facility_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="room"/>
+	</field>
+	<field name="kost_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="kost_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="kost_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="room"/>
+	</field>
+	<field name="room_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="room_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="room_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="room"/>
+	</field>
+	<field name="bathroom_photo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="bathroom_photo"/>
+		<property name="com.jaspersoft.studio.field.label" value="bathroom_photo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="room"/>
+	</field>
+	<field name="enabled" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="enabled"/>
+		<property name="com.jaspersoft.studio.field.label" value="enabled"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="room"/>
+	</field>
+	<field name="front_room_photo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="front_room_photo"/>
+		<property name="com.jaspersoft.studio.field.label" value="front_room_photo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="room"/>
+	</field>
+	<field name="kost_type_man" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="kost_type_man"/>
+		<property name="com.jaspersoft.studio.field.label" value="kost_type_man"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="room"/>
+	</field>
+	<field name="kost_type_mixed" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="kost_type_mixed"/>
+		<property name="com.jaspersoft.studio.field.label" value="kost_type_mixed"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="room"/>
+	</field>
+	<field name="kost_type_woman" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="kost_type_woman"/>
+		<property name="com.jaspersoft.studio.field.label" value="kost_type_woman"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="room"/>
+	</field>
+	<field name="COLUMN_52" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="kost_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="kost_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="additional_notes" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="additional_notes"/>
+		<property name="com.jaspersoft.studio.field.label" value="additional_notes"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="address" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="address"/>
+		<property name="com.jaspersoft.studio.field.label" value="address"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="city" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="city"/>
+		<property name="com.jaspersoft.studio.field.label" value="city"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="COLUMN_56" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="created_at"/>
+		<property name="com.jaspersoft.studio.field.label" value="created_at"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="COLUMN_57" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="deleted_at"/>
+		<property name="com.jaspersoft.studio.field.label" value="deleted_at"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="description" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="description"/>
+		<property name="com.jaspersoft.studio.field.label" value="description"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="dispenser" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="dispenser"/>
+		<property name="com.jaspersoft.studio.field.label" value="dispenser"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="drying_ground" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="drying_ground"/>
+		<property name="com.jaspersoft.studio.field.label" value="drying_ground"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="electric" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="electric"/>
+		<property name="com.jaspersoft.studio.field.label" value="electric"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="COLUMN_62" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="enabled"/>
+		<property name="com.jaspersoft.studio.field.label" value="enabled"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="front_building_photo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="front_building_photo"/>
+		<property name="com.jaspersoft.studio.field.label" value="front_building_photo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="front_farbuilding_photo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="front_farbuilding_photo"/>
+		<property name="com.jaspersoft.studio.field.label" value="front_farbuilding_photo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="gmaps" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="gmaps"/>
+		<property name="com.jaspersoft.studio.field.label" value="gmaps"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="kitchen" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="kitchen"/>
+		<property name="com.jaspersoft.studio.field.label" value="kitchen"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="kost_tv" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="kost_tv"/>
+		<property name="com.jaspersoft.studio.field.label" value="kost_tv"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="COLUMN_68" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="kost_type_man"/>
+		<property name="com.jaspersoft.studio.field.label" value="kost_type_man"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="COLUMN_69" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="kost_type_mixed"/>
+		<property name="com.jaspersoft.studio.field.label" value="kost_type_mixed"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="COLUMN_70" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="kost_type_woman"/>
+		<property name="com.jaspersoft.studio.field.label" value="kost_type_woman"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="laundry" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="laundry"/>
+		<property name="com.jaspersoft.studio.field.label" value="laundry"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="living_room" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="living_room"/>
+		<property name="com.jaspersoft.studio.field.label" value="living_room"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="location_additional_notes" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="location_additional_notes"/>
+		<property name="com.jaspersoft.studio.field.label" value="location_additional_notes"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="parking_car" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="parking_car"/>
+		<property name="com.jaspersoft.studio.field.label" value="parking_car"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="parking_motorcycle" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="parking_motorcycle"/>
+		<property name="com.jaspersoft.studio.field.label" value="parking_motorcycle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="pic" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="pic"/>
+		<property name="com.jaspersoft.studio.field.label" value="pic"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="pic_phone_number" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="pic_phone_number"/>
+		<property name="com.jaspersoft.studio.field.label" value="pic_phone_number"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="province" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="province"/>
+		<property name="com.jaspersoft.studio.field.label" value="province"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="refrigerator" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="refrigerator"/>
+		<property name="com.jaspersoft.studio.field.label" value="refrigerator"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="COLUMN_80" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="updated_at"/>
+		<property name="com.jaspersoft.studio.field.label" value="updated_at"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="water" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="water"/>
+		<property name="com.jaspersoft.studio.field.label" value="water"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="wifi" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="wifi"/>
+		<property name="com.jaspersoft.studio.field.label" value="wifi"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="year_since" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="year_since"/>
+		<property name="com.jaspersoft.studio.field.label" value="year_since"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="COLUMN_84" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="profile_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="profile_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="rule_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="rule_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="rule_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="kost_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="kost_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="kost_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="COLUMN_87" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="available_room"/>
+		<property name="com.jaspersoft.studio.field.label" value="available_room"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="front_road_photo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="front_road_photo"/>
+		<property name="com.jaspersoft.studio.field.label" value="front_road_photo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<field name="parking" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="parking"/>
+		<property name="com.jaspersoft.studio.field.label" value="parking"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kost"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="120" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="95" splitType="Stretch">
+			<staticText>
+				<reportElement x="80" y="65" width="110" height="30" uuid="c9c8656c-0398-4a43-b584-5b7a41d7eeca"/>
+				<text><![CDATA[Nama]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="200" y="65" width="140" height="30" uuid="239201cb-629f-4767-8136-e4de75aab05d"/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="240" y="29" width="100" height="30" uuid="f2e9941d-855a-441d-9ce9-b1778ba3e082"/>
+				<textFieldExpression><![CDATA[$F{check_in}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

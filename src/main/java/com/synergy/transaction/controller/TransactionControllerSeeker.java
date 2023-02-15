@@ -1,5 +1,6 @@
 package com.synergy.transaction.controller;
 
+import com.synergy.transaction.config.CloudFolder;
 import com.synergy.transaction.dto.PostBookingDto;
 import com.synergy.transaction.dto.UploadProofOfPayment;
 import com.synergy.transaction.repository.BookingRepository;
@@ -7,14 +8,19 @@ import com.synergy.transaction.repository.ProfileRepository;
 import com.synergy.transaction.repository.TransactionRepository;
 import com.synergy.transaction.service.impl.TransactionServiceImpl;
 import com.synergy.transaction.util.Response;
+import com.synergy.transaction.util.UploadFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.Map;
@@ -24,6 +30,9 @@ import java.util.Map;
 @CrossOrigin("*")
 public class TransactionControllerSeeker {
     private final static Logger logger = LoggerFactory.getLogger(TransactionControllerSeeker.class);
+
+    @Autowired
+    UploadFile uploadFile;
 
     @Autowired
     private TransactionServiceImpl transactionServiceImpl;
@@ -92,6 +101,23 @@ public class TransactionControllerSeeker {
         } catch (Exception e) {
             logger.error(e.getMessage());
             return res.internalServerError(e.getMessage());
+        }
+    }
+
+    @GetMapping("/download/{transactionId}")
+    public ResponseEntity<byte[]> downloadTransactionProofOfPayment(@PathVariable("transactionId") Long transactionId) {
+        try {
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDispositionFormData("attachment", "Kosanku_Invoice.pdf");
+            headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+
+            byte[] pdfBytes = transactionServiceImpl.downloadInvoice(transactionId);
+            return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(null, null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

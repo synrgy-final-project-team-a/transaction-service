@@ -5,8 +5,10 @@ import com.synergy.transaction.dto.UploadProofOfPayment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Map;
 
 public interface TransactionService {
@@ -30,4 +32,6 @@ public interface TransactionService {
     Page<Map<String, Object>> getSeekerTransactions(Long profileId, Pageable pageable);
 
     Page<Map<String, Object>> getTenantTransactions(Long profileId, Pageable pageable);
+
+    byte[] downloadInvoice(Long transactionId) throws IOException, SQLException;
 }

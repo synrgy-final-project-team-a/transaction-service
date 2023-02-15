@@ -9,15 +9,20 @@ import com.synergy.transaction.entity.enumeration.EStatus;
 import com.synergy.transaction.repository.*;
 import com.synergy.transaction.service.TransactionService;
 import com.synergy.transaction.util.RandomGenerator;
+import com.synergy.transaction.util.ReportService;
 import com.synergy.transaction.util.Response;
 import com.synergy.transaction.util.UploadFile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import java.io.IOException;
+import java.io.*;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -30,6 +35,9 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Autowired
     public Response res;
+
+    @Autowired
+    public ReportService reportService;
 
     @Autowired
     BookingRepository bookingRepository;
@@ -354,5 +362,62 @@ public class TransactionServiceImpl implements TransactionService {
         }
 
         return false;
+    }
+
+    public byte[] downloadInvoice(Long transactionId) throws IOException, SQLException {
+
+        Map<String, Object> parameters33 = new HashMap<>();
+        parameters33.put("idTransaction", transactionId);
+
+        String pathUrl = "./report/Blank_A4.jrxml";
+        byte[] bytes = reportService.generate_pdf(parameters33, pathUrl);
+//        convert byte[] to file
+        MultipartFile multipartFile = new MultipartFile() {
+            @Override
+            public String getName() {
+                return "Invoice.pdf";
+            }
+
+            @Override
+            public String getOriginalFilename() {
+                return "Invoice.pdf";
+            }
+
+            @Override
+            public String getContentType() {
+                return "application/pdf";
+            }
+
+            @Override
+            public boolean isEmpty() {
+                return bytes == null ;
+            }
+
+            @Override
+            public long getSize() {
+                return bytes.length;
+            }
+
+            @Override
+            public byte[] getBytes() throws IOException {
+                return bytes;
+            }
+
+            @Override
+            public InputStream getInputStream() throws IOException {
+                return new ByteArrayInputStream(bytes);
+            }
+
+            @Override
+            public void transferTo(File dest) throws IOException, IllegalStateException {
+                try (FileOutputStream f = new FileOutputStream(dest)) {
+                    f.write(bytes);
+                }
+            }
+        };
+        // upload pdf
+//        String invoicePath = uploadFile.UploadSingleFile(multipartFile, "invoice");
+
+        return bytes;
     }
 }
