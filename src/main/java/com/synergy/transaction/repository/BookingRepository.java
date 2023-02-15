@@ -128,6 +128,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "t.payment_method,\n" +
             "b.phone_number,\n" +
             "k.address,\n" +
+            "k.kost_id,\n" +
             "r.room_name,\n" +
             "k.city,\n" +
             "k.province,\n" +

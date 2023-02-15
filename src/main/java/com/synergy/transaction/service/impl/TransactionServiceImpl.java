@@ -60,6 +60,7 @@ public class TransactionServiceImpl implements TransactionService {
             itemBooking.put("phone_number", response.get("phone_number"));
             itemBooking.put("front_building_photo", response.get("front_building_photo"));
             itemBooking.put("kost_name", response.get("kost_name"));
+            itemBooking.put("kost_id", response.get("kost_id"));
             itemBooking.put("check_in", response.get("check_in"));
             itemBooking.put("check_out", response.get("check_out"));
             itemBooking.put("room_name", response.get("room_name"));
