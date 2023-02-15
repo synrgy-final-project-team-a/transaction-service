@@ -14,20 +14,26 @@ import java.util.Map;
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Query(nativeQuery = true, value = "SELECT \n" +
+            "r.room_name,\n" +
             "t.transaction_id,\n" +
+            "t.updated_at,\n" +
             "t.watched_tn,\n" +
-            "k.kost_name,\n" +
-            "b.booking_id,\n" +
-            "b.booking_code,\n" +
             "t.check_in,\n" +
             "t.check_out,\n" +
+            "t.proof_of_payment,\n" +
+            "k.kost_id,\n" +
+            "k.kost_name,\n" +
             "k.front_building_photo,\n" +
+            "b.phone_number,\n" +
+            "b.name,\n" +
+            "b.booking_id,\n" +
+            "b.booking_code,\n" +
             "k.address,\n" +
             "k.city,\n" +
             "k.province,\n" +
+            "p.duration_type,\n" +
             "p.price,\n" +
             "t.status,\n" +
-            "t.updated_at,\n" +
             "t.deadline_payment\n" +
             "FROM booking b \n" +
             "JOIN transaction t on t.booking_id = b.booking_id \n" +
