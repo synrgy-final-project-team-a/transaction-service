@@ -606,13 +606,6 @@ where t.transaction_id = $P{idTransaction}]]>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 			</line>
-			<textField>
-				<reportElement x="10" y="422" width="420" height="31" uuid="6c4704f3-8de4-402e-bb3d-731bb9190d73"/>
-				<textElement>
-					<font size="14" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Total Harga 			: Rp " + SUM($F{price},10000)]]></textFieldExpression>
-			</textField>
 		</band>
 	</detail>
 	<columnFooter>
