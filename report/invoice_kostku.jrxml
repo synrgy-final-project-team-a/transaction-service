@@ -506,7 +506,7 @@ where t.transaction_id = $P{idTransaction}]]>
 		<band height="7" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="476" splitType="Stretch">
+		<band height="456" splitType="Stretch">
 			<textField>
 				<reportElement x="10" y="124" width="499" height="30" uuid="7a903320-de0c-4197-bed0-d7c857c35d9f"/>
 				<textElement>
@@ -601,13 +601,13 @@ where t.transaction_id = $P{idTransaction}]]>
 				<textFieldExpression><![CDATA["Biaya Aplikasi 		: Rp 10000.00"]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="8" y="420" width="260" height="1" uuid="ae1982ae-03ff-4664-b7a1-26c1a05605d7">
+				<reportElement x="8" y="415" width="260" height="1" uuid="ae1982ae-03ff-4664-b7a1-26c1a05605d7">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 			</line>
 			<textField>
-				<reportElement x="10" y="445" width="420" height="31" uuid="6c4704f3-8de4-402e-bb3d-731bb9190d73"/>
+				<reportElement x="10" y="422" width="420" height="31" uuid="6c4704f3-8de4-402e-bb3d-731bb9190d73"/>
 				<textElement>
 					<font size="14" isBold="false"/>
 				</textElement>
@@ -616,10 +616,7 @@ where t.transaction_id = $P{idTransaction}]]>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="41" splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="54" splitType="Stretch">
+		<band height="41" splitType="Stretch">
 			<textField>
 				<reportElement x="280" y="0" width="380" height="30" uuid="269f684a-0677-4fbf-ae95-e279d6bc4a52"/>
 				<textElement>
@@ -628,6 +625,9 @@ where t.transaction_id = $P{idTransaction}]]>
 				<textFieldExpression><![CDATA["Kode Booking : " + $F{booking_code}]]></textFieldExpression>
 			</textField>
 		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
 		<band height="42" splitType="Stretch"/>
