@@ -64,7 +64,9 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "t.watched_sk,\n" +
             "t.check_in,\n" +
             "t.check_out,\n" +
+            "k.kost_id,\n" +
             "k.kost_name,\n" +
+            "k.front_building_photo,\n" +
             "b.phone_number,\n" +
             "b.name,\n" +
             "b.booking_id,\n" +
