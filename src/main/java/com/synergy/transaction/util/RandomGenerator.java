@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 public class RandomGenerator {
     private static final SecureRandom random = new SecureRandom();
-    private static final String alphaNumeric = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    private static final String alphaNumeric = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final LocalDateTime datetime = LocalDateTime.now();
 
     private static String getCode(Integer length) {
